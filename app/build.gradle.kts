@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     id ("kotlin-parcelize")
+
 }
 
 fun getApiKey(propertyKey: String): String {
@@ -70,6 +71,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
+    //Glid
+    implementation (libs.glide.android)
+    ksp(libs.glide.android.compiler)
+
     implementation (libs.google.api.services.youtube){
         exclude("org.apache.httpcomponents")
     }
@@ -78,4 +84,6 @@ dependencies {
         exclude("org.apache.httpcomponents")
     }
     implementation (libs.google.api.client.gson)
+
+
 }
