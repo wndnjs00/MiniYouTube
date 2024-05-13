@@ -1,11 +1,23 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    id ("kotlin-parcelize")
+    kotlin("kapt")
+}
+val properties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
 }
 
 android {
     namespace = "com.example.miniyoutube"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.example.miniyoutube"
@@ -15,6 +27,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GOOGLE_API_KEY", properties.getProperty("GOOGLE_API_KEY"))
     }
 
     buildTypes {
@@ -33,6 +47,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
+
+
 }
 
 dependencies {
@@ -45,4 +65,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation (libs.google.api.services.youtube)
+    implementation (libs.google.http.client.android)
+    implementation (libs.google.api.client.android)
+    implementation (libs.google.api.client.gson)
 }
