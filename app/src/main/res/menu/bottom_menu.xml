@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:enabled="true"
+            android:icon="@drawable/home_img"
+            android:title ="@string/bottom_home_tv" />
+
+        <item
+            android:id="@+id/search"
+            android:enabled="true"
+            android:icon="@drawable/search_img"
+            android:title="@string/bottom_search_tv" />
+
+        <item
+            android:id="@+id/my_videos"
+            android:enabled="true"
+            android:icon="@drawable/myvideo_img"
+            android:title="@string/bottom_myVideos_tv" />
+    </group>
+
+</menu>

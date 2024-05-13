@@ -1,9 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MiniYouTube" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--상태바 없애기-->
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.MiniYouTube" parent="Base.Theme.MiniYouTube" />
+
+
+    <style name="detailBtn">
+        <item name="android:color">@color/black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 </resources>
