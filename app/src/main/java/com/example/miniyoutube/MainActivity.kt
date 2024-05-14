@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initBottomNavigation() {
-        setFragment(SearchFragment())
+        setFragment(HomeFragment())
 
         binding.mainBottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
