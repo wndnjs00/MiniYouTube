@@ -80,7 +80,7 @@ class SearchFragment : Fragment() {
         } else {
             when(type) {
                 ChipType.FIRST -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
                 }
                 ChipType.SECOND -> {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")

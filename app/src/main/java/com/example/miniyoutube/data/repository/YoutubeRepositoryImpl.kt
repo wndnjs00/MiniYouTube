@@ -11,8 +11,8 @@ class YoutubeRepositoryImpl @Inject constructor(
         return youtubeApiService.requestSearch(query = q, videoOrder = "relevance", videoType = "video", maxResults = 10, videoCategoryId = videoCategoryId.toInt(), part = "snippet")
     }
 
-    override suspend fun requestVideo(q: String): YoutubeVideo {
-        return youtubeApiService.requestVideo(videoId = q, maxResults = 50, part = "contentDetails, statistics")
+    override suspend fun requestVideo(typeId: String): YoutubeVideo {
+        return youtubeApiService.requestVideo(maxResults = 50, part = "snippet", videoCategoryId = typeId)
     }
 
 }

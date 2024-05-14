@@ -24,8 +24,8 @@ class SearchAdapter: ListAdapter<Snippet, SearchAdapter.ViewHolder>(diffUtil) {
     }
     inner class ViewHolder(private val binding : ViewholderSearchBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(snippet: Snippet) {
-            Glide.with(binding.titleImage)
-                .load(snippet.thumbnails)
+            Glide.with(itemView.context)
+                .load(snippet.thumbnails.medium.url)
                 .into(binding.titleImage)
 
             binding.titleText.text = snippet.title

@@ -20,8 +20,9 @@ interface YoutubeApiService {
     @GET("v3/videos")
     suspend fun requestVideo(
         @Query("key") apiKey: String = "AIzaSyAFcV1rTQEDQbG3OrEeWzMDuHjYM-Xd3ig",
-        @Query("id") videoId: String,
-        @Query("maxResults") maxResults: Int,
+        @Query("chart") chart : String = "mostPopular",
+        @Query("maxResults") maxResults: Int = 10,
+        @Query("videoCategoryId") videoCategoryId: String = "0",
         @Query("part") part: String,
     ) : YoutubeVideo
 }
