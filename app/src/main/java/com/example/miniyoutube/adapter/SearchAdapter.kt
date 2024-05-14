@@ -1,0 +1,44 @@
+package com.example.miniyoutube.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.miniyoutube.data.Snippet
+import com.example.miniyoutube.databinding.ViewholderSearchBinding
+
+class SearchAdapter: ListAdapter<Snippet, SearchAdapter.ViewHolder>(diffUtil) {
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<Snippet>() {
+            override fun areItemsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+    inner class ViewHolder(private val binding : ViewholderSearchBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(snippet: Snippet) {
+            Glide.with(binding.titleImage)
+                .load(snippet.thumbnails)
+                .into(binding.titleImage)
+
+            binding.titleText.text = snippet.title
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ViewholderSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(currentList[position])
+    }
+
+}
