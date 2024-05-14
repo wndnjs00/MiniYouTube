@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/clr_151718"
-    tools:context=".VideoDetailActivity">
+    tools:context=".ui.videodetail.VideoDetailActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
