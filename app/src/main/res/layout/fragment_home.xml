@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/clr_151718"
+    android:padding="10dp"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tv_headingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Most Popular Videos"
+        android:textColor="@color/clr_8A8A8A"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_headingView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_headingTitle" />
+
+    <Spinner
+        android:id="@+id/sp_homeBackground"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/spinner_home_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rc_headingView" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_searchView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sp_homeBackground" />
+
+    <TextView
+        android:id="@+id/tv_categoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Channels by Category"
+        android:textColor="@color/clr_8A8A8A"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rc_searchView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_categoryView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_categoryTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

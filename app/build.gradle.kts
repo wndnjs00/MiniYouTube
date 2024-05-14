@@ -1,14 +1,13 @@
-import java.util.Properties
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
-    id ("kotlin-parcelize")
-    kotlin("kapt")
+    id("kotlin-parcelize")
 }
-val properties = Properties().apply {
-    load(project.rootProject.file("local.properties").inputStream())
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir, providers).getProperty(propertyKey)
 }
 
 android {
@@ -28,7 +27,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "GOOGLE_API_KEY", properties.getProperty("GOOGLE_API_KEY"))
+        buildConfigField("String", "GOOGLE_API_KEY", getApiKey("GOOGLE_API_KEY"))
+    }
+
+    packaging {
+        resources.excludes += "META-INF/DEPENDENCIES"
     }
 
     buildTypes {
@@ -48,7 +51,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 
@@ -66,8 +69,12 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation (libs.google.api.services.youtube)
-    implementation (libs.google.http.client.android)
-    implementation (libs.google.api.client.android)
-    implementation (libs.google.api.client.gson)
+    implementation(libs.google.api.services.youtube) {
+        exclude("org.apache.httpcomponents")
+    }
+    implementation(libs.google.http.client.android)
+    implementation(libs.google.api.client.android) {
+        exclude("org.apache.httpcomponents")
+    }
+    implementation(libs.google.api.client.gson)
 }
