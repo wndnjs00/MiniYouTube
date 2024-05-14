@@ -1,4 +1,4 @@
-package com.example.miniyoutube.chipgroup
+package com.example.miniyoutube.ui.search
 
 enum class ChipType {
     FIRST, SECOND, THIRD, FOURTH

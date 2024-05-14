@@ -1,4 +1,4 @@
-package com.example.miniyoutube.adapter
+package com.example.miniyoutube.ui.search.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.miniyoutube.data.Snippet
+import com.example.miniyoutube.data.model.remote.Snippet
 import com.example.miniyoutube.databinding.ViewholderSearchBinding
 
 class SearchAdapter: ListAdapter<Snippet, SearchAdapter.ViewHolder>(diffUtil) {

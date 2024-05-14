@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/clr_151718"
     android:padding="10dp"
-    tools:context=".HomeFragment">
+    tools:context=".ui.home.HomeFragment">
 
     <TextView
         android:id="@+id/tv_headingTitle"
