@@ -69,6 +69,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun chipGroupType(type: ChipType) {
-        //viewModel에있는 retrofit에서 타입값에 따라 받는값 변경
+
     }
 }
