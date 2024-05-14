@@ -1,11 +1,16 @@
-package com.example.miniyoutube
+package com.example.miniyoutube.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.ActivityMainBinding
+import com.example.miniyoutube.ui.home.HomeFragment
 import com.example.miniyoutube.ui.myvideo.MyVideoFragment
+import com.example.miniyoutube.ui.search.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
