@@ -1,4 +1,4 @@
-package com.example.miniyoutube.adapter
+package com.example.miniyoutube.ui.home.recyclerview
 
 import android.annotation.SuppressLint
 import android.content.Context
