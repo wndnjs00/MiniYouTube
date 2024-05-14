@@ -25,6 +25,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setSpinner()
+    }
+
+
+    private fun setSpinner() {
+
         val list = listOf<String>("1", "2", "3")
 
         binding.spHomeBackground.adapter =
