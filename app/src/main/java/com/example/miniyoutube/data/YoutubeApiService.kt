@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface YoutubeApiService {
     @GET("v3/search")
-    fun searchApiService(
+    suspend fun searchApiService(
         @Query("key") apiKey: String = BuildConfig.GOOGLE_API_KEY,
         @Query("q") query: String,
         @Query("order") videoOrder: String,
@@ -19,7 +19,7 @@ interface YoutubeApiService {
 
 
     @GET("v3/videos")
-    fun videoApiService(
+    suspend fun videoApiService(
         @Query("key") apiKey: String = BuildConfig.GOOGLE_API_KEY,
         @Query("id") videoId: String,
         @Query("maxResults") maxResults: Int,
