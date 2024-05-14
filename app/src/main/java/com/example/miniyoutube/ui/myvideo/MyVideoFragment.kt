@@ -18,8 +18,8 @@ class MyVideoFragment : Fragment() {
 
     private val myVideoAdapter: MyVideoAdapter by lazy { MyVideoAdapter(onMyVideoClick = ::goVideoDetail) }
 
-    private fun goVideoDetail(fakeMyVideoData: FakeMyVideoData){
-        startActivity(Intent(requireActivity(),VideoDetailActivity::class.java).apply {
+    private fun goVideoDetail(fakeMyVideoData: FakeMyVideoData) {
+        startActivity(Intent(requireActivity(), VideoDetailActivity::class.java).apply {
             this.putExtra("fakeMyVideoData", fakeMyVideoData)
         })
     }
@@ -46,17 +46,19 @@ class MyVideoFragment : Fragment() {
         setupListener()
     }
 
-    private fun setupData(){
-        myVideoAdapter.submitList(listOf(
-            FakeMyVideoData("url1", "titl1"),
-            FakeMyVideoData("url2", "titl2"),
-            FakeMyVideoData("url3", "titl3"),
-            FakeMyVideoData("url4", "titl4"),
-            FakeMyVideoData("url5", "titl5"),
-        ))
+    private fun setupData() {
+        myVideoAdapter.submitList(
+            listOf(
+                FakeMyVideoData("url1", "titl1"),
+                FakeMyVideoData("url2", "titl2"),
+                FakeMyVideoData("url3", "titl3"),
+                FakeMyVideoData("url4", "titl4"),
+                FakeMyVideoData("url5", "titl5"),
+            )
+        )
     }
 
-    private fun setupListener(){
+    private fun setupListener() {
 
     }
 

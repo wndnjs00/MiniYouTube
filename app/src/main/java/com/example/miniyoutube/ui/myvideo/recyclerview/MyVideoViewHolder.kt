@@ -18,14 +18,13 @@ class MyVideoViewHolder(
     private val binding = ItemFavoriteVideoBinding.bind(itemView)
 
 
-
     fun bind(
         fakeMyVideoData: FakeMyVideoData
     ) {
 
         Glide.with(itemView.context)
             .load(R.drawable.ic_launcher_background)
-            .fitCenter()
+            .centerCrop()
             .into(binding.ivItem)
         binding.tvContentItem.text = fakeMyVideoData.title
 

@@ -74,8 +74,9 @@ dependencies {
 
     //Glid
     implementation (libs.glide.android)
-    ksp(libs.glide.android.compiler)
+    annotationProcessor(libs.glide.android.compiler)
 
+    //youtube
     implementation (libs.google.api.services.youtube){
         exclude("org.apache.httpcomponents")
     }
@@ -84,6 +85,5 @@ dependencies {
         exclude("org.apache.httpcomponents")
     }
     implementation (libs.google.api.client.gson)
-
 
 }
