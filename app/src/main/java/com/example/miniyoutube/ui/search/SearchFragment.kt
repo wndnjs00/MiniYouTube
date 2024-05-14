@@ -1,4 +1,4 @@
-package com.example.miniyoutube
+package com.example.miniyoutube.ui.search
 
 import android.content.Context
 import android.os.Bundle
@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.miniyoutube.SearchPackage.SearchViewModel
-import com.example.miniyoutube.adapter.SearchAdapter
-import com.example.miniyoutube.chipgroup.ChipType
+import com.example.miniyoutube.ui.main.MainActivity
+import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.FragmentSearchBinding
+import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private var _binding : FragmentSearchBinding? = null
@@ -46,7 +48,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        bindViews()
     }
 
 
@@ -73,35 +74,37 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun bindViews() {
-
-    }
-
     private fun chipGroupType(type: ChipType) {
         if(binding.searchEditText.text.isEmpty()) {
             viewModel.getSearch(query = "", "")
         } else {
             when(type) {
                 ChipType.FIRST -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "영화")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "")
                 }
                 ChipType.SECOND -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "키즈")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")
                 }
                 ChipType.THIRD -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "스포츠")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "20")
                 }
                 ChipType.FOURTH -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "성인")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "17")
+                }
+                ChipType.FIFTH -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "19")
+                }
+                ChipType.SIXTH -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "42")
                 }
             }
-        }
 
-        viewModel.search.observe(requireActivity(), Observer {
-            adapter.submitList(
-                listOf(it.body()?.items?.get(1)?.snippet)
-            )
-            binding.recyclerview.adapter = adapter
-        })
+            viewModel.search.observe(requireActivity(), Observer {
+                adapter.submitList(
+                    listOf(it.items[1].snippet)
+                )
+                binding.recyclerview.adapter = adapter
+            })
+        }
     }
 }

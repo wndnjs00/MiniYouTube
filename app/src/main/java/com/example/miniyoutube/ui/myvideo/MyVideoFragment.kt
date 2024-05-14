@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.miniyoutube.VideoDetailActivity
+import com.example.miniyoutube.ui.videodetail.VideoDetailActivity
 import com.example.miniyoutube.databinding.FragmentMyVideoBinding
 import com.example.miniyoutube.ui.myvideo.recyclerview.MyVideoAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyVideoFragment : Fragment() {
 
     private var _binding: FragmentMyVideoBinding? = null

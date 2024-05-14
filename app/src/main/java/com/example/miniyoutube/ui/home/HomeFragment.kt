@@ -1,4 +1,4 @@
-package com.example.miniyoutube
+package com.example.miniyoutube.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.miniyoutube.adapter.CategorySpinnerAdapter
+import com.example.miniyoutube.R
+import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
 import com.example.miniyoutube.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding

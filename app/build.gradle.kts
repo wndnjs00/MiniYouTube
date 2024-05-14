@@ -1,24 +1,25 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+//import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     id ("kotlin-parcelize")
 
 }
 
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir,providers).getProperty(propertyKey)
-}
+//fun getApiKey(propertyKey: String): String {
+//    return gradleLocalProperties(rootDir,providers).getProperty(propertyKey)
+//}
 
 android {
     namespace = "com.example.miniyoutube"
     compileSdk = 34
 
-    buildFeatures {
-        buildConfig = true
-    }
+//    buildFeatures {
+//        buildConfig = true
+//    }
 
     defaultConfig {
         applicationId = "com.example.miniyoutube"
@@ -29,7 +30,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "GOOGLE_API_KEY", getApiKey("GOOGLE_API_KEY"))
+//        buildConfigField("String", "GOOGLE_API_KEY", getApiKey("GOOGLE_API_KEY"))
     }
 
     packaging {
@@ -74,7 +75,8 @@ dependencies {
 
     //Glid
     implementation (libs.glide.android)
-    annotationProcessor(libs.glide.android.compiler)
+    ksp(libs.glide.android.compiler)
+//    annotationProcessor(libs.glide.android.compiler)
 
     //youtube
     implementation (libs.google.api.services.youtube){
@@ -86,20 +88,31 @@ dependencies {
     }
     implementation (libs.google.api.client.gson)
 
-    implementation ("androidx.room:room-runtime:2.6.1")
-    implementation ("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    //okhttp
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
 
-    implementation ("com.squareup.okhttp3:okhttp:4.6.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.6.0")
+    //retorfit2
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
 
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    //hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    //viewModelScope
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    // viewModels
+    implementation (libs.androidx.activity.ktx)
+    implementation (libs.androidx.fragment.ktx)
+
+    //Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 }

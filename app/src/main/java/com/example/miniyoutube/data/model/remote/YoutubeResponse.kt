@@ -1,4 +1,4 @@
-package com.example.miniyoutube.data
+package com.example.miniyoutube.data.model.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -11,11 +11,11 @@ data class YoutubeVideo(
     @SerializedName("etag")
     val etag: String,
     @SerializedName("items")
-    val items: List<Items>
+    val items: List<Item>
 ) : Parcelable
 
 @Parcelize
-data class Items(
+data class Item(
     @SerializedName("id")
     val id : Id,
     @SerializedName("snippet")

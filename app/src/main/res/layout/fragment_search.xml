@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/clr_151718"
-    tools:context=".SearchFragment">
+    tools:context=".ui.search.SearchFragment">
 
     <EditText
         android:id="@+id/search_edit_text"
@@ -70,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
+                android:text="영화"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -78,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
+                android:text="게임"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -86,6 +88,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
+                android:text="스포츠"
+                app:chipIconEnabled="true"
+                app:chipIconTint="@color/chip_filter"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fifth_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.miniyoutube.Chip"
+                app:chipIconEnabled="true"
+                android:text="여행, 이벤트"
+                app:chipIconTint="@color/chip_filter"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sixth_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.miniyoutube.Chip"
+                android:text="Shorts"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
