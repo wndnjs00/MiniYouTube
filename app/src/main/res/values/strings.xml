@@ -2,4 +2,11 @@
     <string name="app_name">MiniYouTube</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_home">Home</string>
+    <string name="main_search">Search</string>
+    <string name="main_my_videos">My Videos</string>
+    <string name="detail_like_btn">좋아요</string>
+    <string name="detail_share_btn">공유</string>
+    <string name="detail_video_title">Title</string>
+    <string name="detail_video_content">content content content content content content</string>
 </resources>
