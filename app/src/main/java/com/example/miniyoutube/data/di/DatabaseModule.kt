@@ -3,7 +3,7 @@ package com.example.miniyoutube.data.di
 import android.content.Context
 import androidx.room.Room
 import com.example.miniyoutube.data.database.FavoriteDatabase
-import com.example.miniyoutube.data.database.SnippetDao
+import com.example.miniyoutube.data.database.StorageDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +27,9 @@ object DatabaseModule {
     ).build()
 
     @Provides
-    fun providesSearchDao(
+    fun providesFavoriteDao(
         database: FavoriteDatabase,
-    ): SnippetDao = database.snippetDao()
+    ): StorageDao = database.storageDao()
+
+
 }
