@@ -19,10 +19,6 @@ class VideoDetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityVideoDetailBinding.inflate(layoutInflater) }
 
-    companion object{
-        const val EXTRA_YOUTUBE : String = "extra_youtube"
-    }
-
     private val roomViewModel by viewModels<RoomViewModel>()
 
 
@@ -39,9 +35,9 @@ class VideoDetailActivity : AppCompatActivity() {
     private fun getIntentData(){
         // 보낸 데이터 받아오기 (FavoriteItem 받아오는걸로 수정)
         val youtubeData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_YOUTUBE, Snippet::class.java)
+            intent.getParcelableExtra("키값변수", Snippet::class.java)
         } else {
-            intent.getParcelableExtra(EXTRA_YOUTUBE) as? Snippet
+            intent.getParcelableExtra("키값변수") as? Snippet
         }
 
         with(binding){
