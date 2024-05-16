@@ -23,12 +23,12 @@
         android:id="@+id/rc_headingView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_headingTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tv_headingTitle"
+        tools:listitem="@layout/item_list_main_title" />
 
     <Spinner
         android:id="@+id/sp_homeBackground"

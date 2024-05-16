@@ -9,7 +9,7 @@ class YoutubeRepositoryImpl @Inject constructor(
     private val youtubeApiService: YoutubeApiService
 ) : YoutubeRepository {
     override suspend fun requestSearch(q: String, videoCategoryId: String): YoutubeVideo {
-        return youtubeApiService.requestSearch(query = q, videoOrder = "relevance", videoType = "video", maxResults = 10, videoCategoryId = 30, part = "snippet")
+        return youtubeApiService.requestSearch(query = q, videoOrder = "relevance", videoType = "video", maxResults = 10, videoCategoryId = videoCategoryId, part = "snippet")
     }
 
     override suspend fun requestVideo(videoCategoryId:String): YoutubeVideoInfo { //고정된 값 _아래에서 고정

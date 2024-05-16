@@ -11,15 +11,15 @@ import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.FragmentHomeBinding
 import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
-import com.example.miniyoutube.ui.home.recyclerview.HomeRecyclerViewAdapter
-import com.example.miniyoutube.ui.home.recyclerview.YoutubeImageClickListener
+import com.example.miniyoutube.ui.home.recyclerview.HeadingImageClickListener
+import com.example.miniyoutube.ui.home.recyclerview.HeadingRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeRecyclerViewAdapter: HomeRecyclerViewAdapter
+    private lateinit var headingRecyclerViewAdapter: HeadingRecyclerViewAdapter
     private val homeViewModle: HomeViewModel by viewModels()
 
 
@@ -35,17 +35,18 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModle.requestVideo("0") // 요청
 
-        homeRecyclerViewAdapter = homeRecyclerViewAdapter()
+        headingRecyclerViewAdapter = headingRecyclerViewAdapter()
 
         setSpinner()
-        binding.rcHeadingView.adapter = homeRecyclerViewAdapter
+        binding.rcHeadingView.adapter = headingRecyclerViewAdapter
         setUpObserve()
     }
 
 
     private fun setSpinner() {
-        val list = listOf<String>("1", "2", "3")
-
+        val list = listOf<String>("영화","","2","3","4","5")
+        //val list = listOf<>(homeViewModle.requestSearch())
+        //api 호출해서 오는 아이템 > 뷰모델
         binding.spHomeBackground.adapter =
             CategorySpinnerAdapter(requireContext(), R.layout.item_spinner_home, list)
         binding.spHomeBackground.onItemSelectedListener =
@@ -57,29 +58,35 @@ class HomeFragment : Fragment() {
                     id: Long
                 ) {
                     val value = binding.spHomeBackground.getItemAtPosition(position).toString()
-                    Toast.makeText(requireContext(), value, Toast.LENGTH_SHORT).show()
+                    when(position){
+                        0 -> {
+                            homeViewModle.requestVideo("17")
+                        }
+                    }
                     //선택
+                    //뷰홀더, 어뎁터 하나 더 생성 후 연결 (레이아웃 동일
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     //선택되지 않은 경우
                 }
             }
+        setUpObserve()
+        //화면 전환 > 값이 바뀜 > 리사이클려뷰 갱신
     }
 
     private fun setUpObserve() {
         homeViewModle.youtubeVideo.observe(viewLifecycleOwner) {
             //데이터가 변경될 때 (데이터가 들어왔을때)
             //요청 >  < 데이터를 가져옴 + observe
-
             it.items?.let {
-                homeRecyclerViewAdapter.submitList(it)
+                headingRecyclerViewAdapter.headingsubmitList(it)
             }
         }
     }
 
-    private fun homeRecyclerViewAdapter(): HomeRecyclerViewAdapter {
-        return HomeRecyclerViewAdapter(object : YoutubeImageClickListener {
+    private fun headingRecyclerViewAdapter(): HeadingRecyclerViewAdapter {
+        return HeadingRecyclerViewAdapter(object : HeadingImageClickListener {
             override fun onClickItem(youtubeVideoList: View) {
                 //
             }

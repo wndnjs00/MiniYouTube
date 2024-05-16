@@ -22,10 +22,12 @@ class HomeViewModel @Inject constructor(
     val youtubeVideo: LiveData<YoutubeVideoInfo>
         get() = _youtubeVideo
 
+
     fun requestVideo(videoCategoryId: String) {
         viewModelScope.launch {//비동기 실행
             val resultYoutubeVideo = youtubeRepository.requestVideo(videoCategoryId)
             _youtubeVideo.value = resultYoutubeVideo
         }
     }
+
 }

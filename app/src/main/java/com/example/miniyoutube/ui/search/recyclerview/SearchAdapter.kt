@@ -6,29 +6,34 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.miniyoutube.data.model.remote.Item
 import com.example.miniyoutube.data.model.remote.Snippet
 import com.example.miniyoutube.databinding.ViewholderSearchBinding
 
-class SearchAdapter: ListAdapter<Snippet, SearchAdapter.ViewHolder>(diffUtil) {
+class SearchAdapter(val onClick: (Item) -> Unit): ListAdapter<Item, SearchAdapter.ViewHolder>(diffUtil) {
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Snippet>() {
-            override fun areItemsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<Item>() {
+            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+            override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
                 return oldItem == newItem
             }
         }
     }
     inner class ViewHolder(private val binding : ViewholderSearchBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(snippet: Snippet) {
-            Glide.with(binding.titleImage)
-                .load(snippet.thumbnails)
+        fun bind(item: Item) {
+            Glide.with(itemView.context)
+                .load(item.snippet.thumbnails.medium.url)
                 .into(binding.titleImage)
 
-            binding.titleText.text = snippet.title
+            binding.titleText.text = item.snippet.title
+
+            binding.root.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 

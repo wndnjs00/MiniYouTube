@@ -2,6 +2,7 @@ package com.example.miniyoutube.data.di
 
 import com.example.miniyoutube.data.repository.YoutubeRepository
 import com.example.miniyoutube.data.repository.YoutubeRepositoryImpl
+import com.example.miniyoutube.data.service.YoutubeApiService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
