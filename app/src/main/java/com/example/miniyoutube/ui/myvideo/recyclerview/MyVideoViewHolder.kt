@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.ItemFavoriteVideoBinding
-import com.example.miniyoutube.ui.myvideo.FakeMyVideoData
+import com.example.miniyoutube.ui.model.FavoriteItem
 
 class MyVideoViewHolder(
     parent: ViewGroup,
-    private val onMyVideoClick: (fakeMyVideoData: FakeMyVideoData) -> Unit
+    private val onMyVideoClick: (favoriteItme: FavoriteItem) -> Unit,
+    private val onMyVideoLongClick: (favoriteItme: FavoriteItem) -> Boolean,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_video, parent, false)
 ) {
@@ -19,17 +20,20 @@ class MyVideoViewHolder(
 
 
     fun bind(
-        fakeMyVideoData: FakeMyVideoData
+        favoriteItme: FavoriteItem
     ) {
 
         Glide.with(itemView.context)
             .load(R.drawable.ic_launcher_background)
             .centerCrop()
             .into(binding.ivItem)
-        binding.tvContentItem.text = fakeMyVideoData.title
+        binding.tvContentItem.text = favoriteItme.title
 
         binding.root.setOnClickListener {
-            onMyVideoClick(fakeMyVideoData)
+            onMyVideoClick(favoriteItme)
+        }
+        binding.root.setOnLongClickListener {
+            onMyVideoLongClick(favoriteItme)
         }
     }
 }

@@ -1,13 +1,13 @@
 package com.example.miniyoutube.ui.myvideo.recyclerview
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.miniyoutube.ui.myvideo.FakeMyVideoData
+import com.example.miniyoutube.ui.model.FavoriteItem
 
-class MyVideoDiffUtil : DiffUtil.ItemCallback<FakeMyVideoData>() {
+class MyVideoDiffUtil : DiffUtil.ItemCallback<FavoriteItem>() {
 
-    override fun areItemsTheSame(oldItem: FakeMyVideoData, newItem: FakeMyVideoData): Boolean =
+    override fun areItemsTheSame(oldItem: FavoriteItem, newItem: FavoriteItem): Boolean =
         oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: FakeMyVideoData, newItem: FakeMyVideoData): Boolean =
+    override fun areContentsTheSame(oldItem: FavoriteItem, newItem: FavoriteItem): Boolean =
         oldItem == newItem
 }
