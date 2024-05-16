@@ -8,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.FragmentSearchBinding
@@ -24,7 +23,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private var _binding : FragmentSearchBinding? = null
     private lateinit var mainActivity: MainActivity
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: SearchAdapter
 
     override fun onAttach(context: Context) {
@@ -70,7 +69,7 @@ class SearchFragment : Fragment() {
             intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultList)
             startActivity(intent)
         })
-        viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
+        //viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
 
         binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, ints ->
             val selectChip = chipGroup.checkedChipId
@@ -126,9 +125,9 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        viewModel.search.observe(requireActivity(), Observer {
+        viewModel.search.observe(viewLifecycleOwner) {
             adapter.submitList(it.items)
             binding.recyclerview.adapter = adapter
-        })
+        }
     }
 }
