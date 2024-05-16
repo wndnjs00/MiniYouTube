@@ -11,7 +11,7 @@ import com.example.miniyoutube.data.model.local.SnippetEntity
 interface SnippetDao {
 
     @Query("SELECT * FROM snippet")
-    suspend fun getAll(): LiveData<List<SnippetEntity>>
+    fun getAll(): LiveData<List<SnippetEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(snippetEntity: SnippetEntity)
