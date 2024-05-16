@@ -10,5 +10,6 @@ data class SnippetEntity(
     val channelId: String?,
     val title: String?,
     val description: String?,
+    val url: String?
 )
 
