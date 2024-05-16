@@ -1,14 +1,21 @@
 package com.example.miniyoutube.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
+import com.example.miniyoutube.data.model.remote.Snippet
+import com.example.miniyoutube.data.model.remote.YoutubeVideo
 import com.example.miniyoutube.databinding.FragmentSearchBinding
+import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +23,8 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private var _binding : FragmentSearchBinding? = null
     private lateinit var mainActivity: MainActivity
+    private lateinit var viewModel: SearchViewModel
+    private lateinit var adapter: SearchAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,11 +52,16 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        bindViews()
     }
 
 
     private fun initViews() {
+        adapter = SearchAdapter(onClick = {
+            val intent = Intent(context, SearchFragment::class.java)
+            startActivity(intent)
+        })
+        viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
+
         binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, ints ->
             val selectChip = chipGroup.checkedChipId
             when (selectChip) {
@@ -63,16 +77,48 @@ class SearchFragment : Fragment() {
                 R.id.fourth_type -> {
                     chipGroupType(ChipType.FOURTH)
                 }
+                R.id.fifth_type -> {
+                    chipGroupType(ChipType.FIFTH)
+                }
+                R.id.sixth_type -> {
+                    chipGroupType(ChipType.SIXTH)
+                }
             }
         }
     }
 
-
-    private fun bindViews() {
-
-    }
-
     private fun chipGroupType(type: ChipType) {
-        //viewModel에있는 retrofit에서 타입값에 따라 받는값 변경
+        if(binding.searchEditText.text.isEmpty()) {
+            binding.recyclerview.isVisible = false
+            binding.emptyMessage.isVisible = true
+            //viewModel.getSearch(query = "", "")
+        } else {
+            binding.recyclerview.isVisible = true
+            binding.emptyMessage.isVisible = false
+            when(type) {
+                ChipType.FIRST -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
+                }
+                ChipType.SECOND -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")
+                }
+                ChipType.THIRD -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "20")
+                }
+                ChipType.FOURTH -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "17")
+                }
+                ChipType.FIFTH -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "19")
+                }
+                ChipType.SIXTH -> {
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "42")
+                }
+            }
+        }
+        viewModel.search.observe(requireActivity(), Observer {
+            adapter.submitList(it.items)
+            binding.recyclerview.adapter = adapter
+        })
     }
 }
