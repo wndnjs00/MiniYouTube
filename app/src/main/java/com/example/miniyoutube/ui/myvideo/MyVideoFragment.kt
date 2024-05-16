@@ -2,7 +2,6 @@ package com.example.miniyoutube.ui.myvideo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +25,8 @@ class MyVideoFragment : Fragment() {
     private val myVideoAdapter: MyVideoAdapter by lazy {
         MyVideoAdapter(
             onMyVideoClick = ::goVideoDetail,
-            onMyVideoLongClick = ::deleteSnippetEntity)
+            onMyVideoLongClick = ::deleteSnippetEntity
+        )
     }
 
     private val myVideoViewModel: MyVideoViewModel by viewModels()
@@ -47,13 +47,28 @@ class MyVideoFragment : Fragment() {
         setupObserve()
     }
 
-    private fun setupObserve(){
-        myVideoViewModel.snippetEntities.observe(viewLifecycleOwner){ snippetEntityList ->
-            Log.e("cyc","fragment에서 RoomDB LiveData 확인 --->snippetEntities")
-            myVideoAdapter.submitList(snippetEntityList.map {
+    private fun setupObserve() {
+        myVideoViewModel.storageEntities.observe(viewLifecycleOwner) { storageEntityList ->
+            myVideoViewModel.checkStorageEntities()
+            myVideoAdapter.submitList(storageEntityList.map {
                 it.toItem()
             })
         }
+
+        myVideoViewModel.visibilityView.observe(viewLifecycleOwner) {
+            when (it) {
+                VisibilityView.EMPTYVIEW -> {
+                    binding.tvEmpty.visibility = View.VISIBLE
+                    binding.rv.visibility = View.INVISIBLE
+                }
+
+                VisibilityView.RECYCLERVIEW -> {
+                    binding.tvEmpty.visibility = View.INVISIBLE
+                    binding.rv.visibility = View.VISIBLE
+                }
+            }
+        }
+
     }
 
     private fun setSearchAdapter() {
@@ -72,7 +87,7 @@ class MyVideoFragment : Fragment() {
         })
     }
 
-    private fun deleteSnippetEntity(favoriteItme: FavoriteItem) : Boolean {
+    private fun deleteSnippetEntity(favoriteItme: FavoriteItem): Boolean {
         myVideoViewModel.deleteSnippetEntity(favoriteItme.videoId)
         return true
     }
