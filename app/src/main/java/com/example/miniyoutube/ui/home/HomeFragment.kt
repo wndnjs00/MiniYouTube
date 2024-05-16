@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
 import com.example.miniyoutube.databinding.FragmentHomeBinding
+import com.example.miniyoutube.ui.home.recyclerview.CategoryChannelRecyclerViewAdapter
+import com.example.miniyoutube.ui.home.recyclerview.CategoryRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
-import com.example.miniyoutube.ui.home.recyclerview.HeadingImageClickListener
 import com.example.miniyoutube.ui.home.recyclerview.HeadingRecyclerViewAdapter
+import com.example.miniyoutube.ui.home.recyclerview.HomeImageClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,8 +21,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var headingRecyclerViewAdapter: HeadingRecyclerViewAdapter
+    private lateinit var categoryRecyclerViewAdapter: CategoryRecyclerViewAdapter
+    private lateinit var categoryChannelRecyclerViewAdapter: CategoryChannelRecyclerViewAdapter
     private val homeViewModle: HomeViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,18 +36,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModle.requestVideo("0") // 요청
+        homeViewModle.requestVideo("17")
 
         headingRecyclerViewAdapter = headingRecyclerViewAdapter()
+        categoryRecyclerViewAdapter = categoryRecyclerViewAdapter()
+        categoryChannelRecyclerViewAdapter = categoryChannelRecyclerViewAdapter()
 
         setSpinner()
         binding.rcHeadingView.adapter = headingRecyclerViewAdapter
         setUpObserve()
+
+        binding.rcSearchView.adapter = categoryRecyclerViewAdapter
+        binding.rcCategoryView.adapter = categoryChannelRecyclerViewAdapter
     }
 
 
     private fun setSpinner() {
-        val list = listOf<String>("영화","","2","3","4","5")
-        //val list = listOf<>(homeViewModle.requestSearch())
+        val list = listOf<String>("Sports", "Movies", "Music", "Pets&Animals", "Drama")
         //api 호출해서 오는 아이템 > 뷰모델
         binding.spHomeBackground.adapter =
             CategorySpinnerAdapter(requireContext(), R.layout.item_spinner_home, list)
@@ -56,17 +63,30 @@ class HomeFragment : Fragment() {
                     view: View?,
                     position: Int,
                     id: Long
-                ) {
+                ) {//선택
                     val value = binding.spHomeBackground.getItemAtPosition(position).toString()
-                    when(position){
+                    when (position) {
                         0 -> {
                             homeViewModle.requestVideo("17")
                         }
-                    }
-                    //선택
-                    //뷰홀더, 어뎁터 하나 더 생성 후 연결 (레이아웃 동일
-                }
 
+                        1 -> {
+                            homeViewModle.requestVideo("30")
+                        }
+
+                        2 -> {
+                            homeViewModle.requestVideo("10")
+                        }
+
+                        3 -> {
+                            homeViewModle.requestVideo("15")
+                        }
+
+                        4 -> {
+                            homeViewModle.requestVideo("36")
+                        }
+                    }
+                }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     //선택되지 않은 경우
                 }
@@ -81,12 +101,29 @@ class HomeFragment : Fragment() {
             //요청 >  < 데이터를 가져옴 + observe
             it.items?.let {
                 headingRecyclerViewAdapter.headingsubmitList(it)
+                categoryRecyclerViewAdapter.categorysubmitList(it)
             }
         }
     }
 
     private fun headingRecyclerViewAdapter(): HeadingRecyclerViewAdapter {
-        return HeadingRecyclerViewAdapter(object : HeadingImageClickListener {
+        return HeadingRecyclerViewAdapter(object : HomeImageClickListener {
+            override fun onClickItem(youtubeVideoList: View) {
+                //클릭이벤트
+            }
+        })
+    }
+
+    private fun categoryRecyclerViewAdapter(): CategoryRecyclerViewAdapter {
+        return CategoryRecyclerViewAdapter(object : HomeImageClickListener {
+            override fun onClickItem(youtubeVideoList: View) {
+                //
+            }
+        })
+    }
+
+    private fun categoryChannelRecyclerViewAdapter(): CategoryChannelRecyclerViewAdapter {
+        return CategoryChannelRecyclerViewAdapter(object : HomeImageClickListener{
             override fun onClickItem(youtubeVideoList: View) {
                 //
             }

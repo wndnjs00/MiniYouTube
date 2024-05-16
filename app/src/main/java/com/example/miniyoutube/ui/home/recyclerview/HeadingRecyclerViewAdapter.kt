@@ -8,25 +8,25 @@ import com.bumptech.glide.Glide
 import com.example.miniyoutube.data.model.remote.TrendItem
 import com.example.miniyoutube.databinding.ItemListMainTitleBinding
 
-interface HeadingImageClickListener {
+interface HomeImageClickListener {
     fun onClickItem(youtubeVideoList: View)
 }
 
 class HeadingRecyclerViewAdapter(
-    private val headingImageClickListener: HeadingImageClickListener
-) : RecyclerView.Adapter<HeadingRecyclerViewAdapter.HomeViewHolder>() {
+    private val homeImageClickListener: HomeImageClickListener
+) : RecyclerView.Adapter<HeadingRecyclerViewAdapter.HeadingViewHolder>() {
 
     var youtubeVideoList: List<TrendItem> = listOf()
 
-    class HomeViewHolder(
+    class HeadingViewHolder(
         private val binding: ItemListMainTitleBinding,
-        private val headingImageClickListener: HeadingImageClickListener
+        private val homeImageClickListener: HomeImageClickListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
             init {
                 binding.root.setOnClickListener {
-                    headingImageClickListener.onClickItem(youtubeVideoList = it)
+                    homeImageClickListener.onClickItem(youtubeVideoList = it)
                 }
             }
 
@@ -37,10 +37,10 @@ class HeadingRecyclerViewAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeadingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return HomeViewHolder(binding = ItemListMainTitleBinding.inflate(layoutInflater,parent,false),
-            headingImageClickListener = headingImageClickListener
+        return HeadingViewHolder(binding = ItemListMainTitleBinding.inflate(layoutInflater,parent,false),
+            homeImageClickListener = homeImageClickListener
         )
     }
 
@@ -48,7 +48,7 @@ class HeadingRecyclerViewAdapter(
         return youtubeVideoList.size
     }
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HeadingViewHolder, position: Int) {
         holder.bind(youtubeVideoList[position])
     }
 

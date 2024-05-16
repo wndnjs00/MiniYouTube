@@ -5,17 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.miniyoutube.data.model.remote.Item
+import com.example.miniyoutube.data.model.remote.TrendItem
 import com.example.miniyoutube.databinding.ItemListMainTitleBinding
 
-class CategoryRecyclerView() : RecyclerView.Adapter<CategoryRecyclerView.CategoryViewHolder>() {
+class CategoryRecyclerViewAdapter(
+    private val homeImageClickListener: HomeImageClickListener
+) : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
 
-    var youtubeVideoList: List<Item> = listOf()
+    var youtubeVideoList: List<TrendItem> = listOf()
 
     class CategoryViewHolder(
-        private var binding: ItemListMainTitleBinding
+        private var binding: ItemListMainTitleBinding,
+        private val homeImageClickListener: HomeImageClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(youtubeVideoList: Item) {
+        init {
+            binding.root.setOnClickListener {
+                homeImageClickListener.onClickItem(youtubeVideoList = it)
+            }
+        }
+
+        fun bind(youtubeVideoList: TrendItem) {
             Glide.with(binding.root.context).load(youtubeVideoList.snippet.thumbnails.medium.url)
                 .into(binding.ivProfile)
             binding.tvTitle.text = youtubeVideoList.snippet.title
@@ -25,11 +35,8 @@ class CategoryRecyclerView() : RecyclerView.Adapter<CategoryRecyclerView.Categor
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return CategoryViewHolder(
-            binding = ItemListMainTitleBinding.inflate(
-                layoutInflater,
-                parent,
-                false
-            )
+            binding = ItemListMainTitleBinding.inflate(layoutInflater, parent, false),
+            homeImageClickListener = homeImageClickListener
         )
     }
 
@@ -41,7 +48,7 @@ class CategoryRecyclerView() : RecyclerView.Adapter<CategoryRecyclerView.Categor
         return holder.bind(youtubeVideoList[position])
     }
 
-    fun categorysubmitList(item: List<Item>){
+    fun categorysubmitList(item: List<TrendItem>){
         this.youtubeVideoList = item
         notifyDataSetChanged()
     }
