@@ -1,7 +1,6 @@
 package com.example.miniyoutube.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
-import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
 import com.example.miniyoutube.databinding.FragmentHomeBinding
+import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
 import com.example.miniyoutube.ui.home.recyclerview.HomeRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.YoutubeImageClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,14 +33,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModle.requestVideo("0")
+        homeViewModle.requestVideo("0") // 요청
+
+        homeRecyclerViewAdapter = homeRecyclerViewAdapter()
 
         setSpinner()
+        binding.rcHeadingView.adapter = homeRecyclerViewAdapter
+        setUpObserve()
     }
 
 
     private fun setSpinner() {
-
         val list = listOf<String>("1", "2", "3")
 
         binding.spHomeBackground.adapter =
@@ -56,6 +58,7 @@ class HomeFragment : Fragment() {
                 ) {
                     val value = binding.spHomeBackground.getItemAtPosition(position).toString()
                     Toast.makeText(requireContext(), value, Toast.LENGTH_SHORT).show()
+                    //선택
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -66,14 +69,19 @@ class HomeFragment : Fragment() {
 
     private fun setUpObserve() {
         homeViewModle.youtubeVideo.observe(viewLifecycleOwner) {
+            //데이터가 변경될 때 (데이터가 들어왔을때)
+            //요청 >  < 데이터를 가져옴 + observe
 
+            it.items?.let {
+                homeRecyclerViewAdapter.submitList(it)
+            }
         }
     }
 
-    private fun homeRecyclerViewAdapter() {
-        HomeRecyclerViewAdapter(youtubeImageClickListener = object : YoutubeImageClickListener {
+    private fun homeRecyclerViewAdapter(): HomeRecyclerViewAdapter {
+        return HomeRecyclerViewAdapter(object : YoutubeImageClickListener {
             override fun onClickItem(youtubeVideoList: View) {
-
+                //
             }
         })
     }

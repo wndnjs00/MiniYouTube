@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.miniyoutube.data.model.remote.Item
 import com.example.miniyoutube.data.model.remote.Snippet
+import com.example.miniyoutube.data.model.remote.TrendItem
 import com.example.miniyoutube.databinding.ItemListMainTitleBinding
 
 interface YoutubeImageClickListener {
@@ -17,7 +18,7 @@ class HomeRecyclerViewAdapter(
     private val youtubeImageClickListener: YoutubeImageClickListener
 ) : RecyclerView.Adapter<HomeRecyclerViewAdapter.HomeViewHolder>() {
 
-    var youtubeVideoList: List<Item> = listOf()
+    var youtubeVideoList: List<TrendItem> = listOf()
 
     class HomeViewHolder(
         private val binding: ItemListMainTitleBinding,
@@ -31,7 +32,7 @@ class HomeRecyclerViewAdapter(
                 }
             }
 
-        fun bind(youtubeVideoList: Item) {
+        fun bind(youtubeVideoList: TrendItem) {
             Glide.with(binding.root.context).load(youtubeVideoList.snippet.thumbnails)
                 .into(binding.ivProfile)
             binding.tvTitle.text = youtubeVideoList.snippet.channelTitle
@@ -53,7 +54,7 @@ class HomeRecyclerViewAdapter(
         holder.bind(youtubeVideoList[position])
     }
 
-    fun submitList(item: List<Item>) {
+    fun submitList(item: List<TrendItem>) {
         this.youtubeVideoList = item
         notifyDataSetChanged()
     }

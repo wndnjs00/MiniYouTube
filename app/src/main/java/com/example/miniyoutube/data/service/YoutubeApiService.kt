@@ -1,6 +1,7 @@
 package com.example.miniyoutube.data.service
 
 import com.example.miniyoutube.data.model.remote.YoutubeVideo
+import com.example.miniyoutube.data.model.remote.YoutubeVideoInfo
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -20,8 +21,9 @@ interface YoutubeApiService {
     @GET("v3/videos")
     suspend fun requestVideo(
         @Query("key") apiKey: String = "AIzaSyAFcV1rTQEDQbG3OrEeWzMDuHjYM-Xd3ig",
-        @Query("id") videoId: String,
+        @Query("videoCategoryId") videoCategoryId: String,
         @Query("maxResults") maxResults: Int,
         @Query("part") part: String,
-    ) : YoutubeVideo
+        @Query("chart") chart: String
+    ) : YoutubeVideoInfo
 }
