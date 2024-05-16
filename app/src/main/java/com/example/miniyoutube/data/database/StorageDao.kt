@@ -5,18 +5,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.miniyoutube.data.model.local.SnippetEntity
+import com.example.miniyoutube.data.model.local.StorageEntity
 
 @Dao
-interface SnippetDao {
+interface StorageDao {
 
-    @Query("SELECT * FROM snippet")
-    suspend fun getAll(): LiveData<List<SnippetEntity>>
+    @Query("SELECT * FROM storage")
+    fun getAll(): LiveData<List<StorageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(snippetEntity: SnippetEntity)
+    suspend fun insert(snippetEntity: StorageEntity)
 
-    @Query("DELETE FROM snippet WHERE videoId = :videoId")
+    @Query("DELETE FROM storage WHERE videoId = :videoId")
     suspend fun deleteSnippet(videoId: String)
 
 //    OnConflictStrategy.ABORT	충돌이 발생할 경우 처리 중단
