@@ -12,10 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
-import com.example.miniyoutube.data.model.remote.Snippet
-import com.example.miniyoutube.data.model.remote.YoutubeVideo
 import com.example.miniyoutube.databinding.FragmentSearchBinding
+import com.example.miniyoutube.ui.model.FavoriteItem
 import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
+import com.example.miniyoutube.ui.videodetail.VideoDetailActivity
+import com.example.miniyoutube.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +58,16 @@ class SearchFragment : Fragment() {
 
     private fun initViews() {
         adapter = SearchAdapter(onClick = {
-            val intent = Intent(context, SearchFragment::class.java)
+            val resultList = FavoriteItem(
+                videoId = it.id.toString(),
+                channelId = it.snippet.channelId,
+                title = it.snippet.title,
+                description = it.snippet.description,
+                url = it.snippet.thumbnails.medium.url
+            )
+
+            val intent = Intent(context, VideoDetailActivity::class.java)
+            intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultList)
             startActivity(intent)
         })
         viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
