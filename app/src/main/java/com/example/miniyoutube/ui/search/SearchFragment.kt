@@ -1,15 +1,19 @@
 package com.example.miniyoutube.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
+import com.example.miniyoutube.data.model.remote.Snippet
+import com.example.miniyoutube.data.model.remote.YoutubeVideo
 import com.example.miniyoutube.databinding.FragmentSearchBinding
 import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +56,10 @@ class SearchFragment : Fragment() {
 
 
     private fun initViews() {
-        adapter = SearchAdapter()
+        adapter = SearchAdapter(onClick = {
+            val intent = Intent(context, SearchFragment::class.java)
+            startActivity(intent)
+        })
         viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
 
         binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, ints ->
@@ -70,17 +77,27 @@ class SearchFragment : Fragment() {
                 R.id.fourth_type -> {
                     chipGroupType(ChipType.FOURTH)
                 }
+                R.id.fifth_type -> {
+                    chipGroupType(ChipType.FIFTH)
+                }
+                R.id.sixth_type -> {
+                    chipGroupType(ChipType.SIXTH)
+                }
             }
         }
     }
 
     private fun chipGroupType(type: ChipType) {
         if(binding.searchEditText.text.isEmpty()) {
-            viewModel.getSearch(query = "", "")
+            binding.recyclerview.isVisible = false
+            binding.emptyMessage.isVisible = true
+            //viewModel.getSearch(query = "", "")
         } else {
+            binding.recyclerview.isVisible = true
+            binding.emptyMessage.isVisible = false
             when(type) {
                 ChipType.FIRST -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "")
                 }
                 ChipType.SECOND -> {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")
@@ -98,13 +115,10 @@ class SearchFragment : Fragment() {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "42")
                 }
             }
-
-            viewModel.search.observe(requireActivity(), Observer {
-                adapter.submitList(
-                    listOf(it.items[1].snippet)
-                )
-                binding.recyclerview.adapter = adapter
-            })
         }
+        viewModel.search.observe(requireActivity(), Observer {
+            adapter.submitList(it.items)
+            binding.recyclerview.adapter = adapter
+        })
     }
 }

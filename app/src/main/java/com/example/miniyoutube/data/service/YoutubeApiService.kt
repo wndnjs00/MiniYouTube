@@ -12,7 +12,7 @@ interface YoutubeApiService {
         @Query("order") videoOrder: String,
         @Query("type") videoType: String,
         @Query("maxResults") maxResults: Int,
-        @Query("videoCategoryId") videoCategoryId: Int,
+        @Query("videoCategoryId") videoCategoryId: String = "0",
         @Query("part") part: String
     ) : YoutubeVideo
 
