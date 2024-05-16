@@ -1,5 +1,6 @@
 package com.example.miniyoutube.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,7 +11,7 @@ import com.example.miniyoutube.data.model.local.SnippetEntity
 interface SnippetDao {
 
     @Query("SELECT * FROM snippet")
-    suspend fun getAll(): List<SnippetEntity>
+    suspend fun getAll(): LiveData<List<SnippetEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(snippetEntity: SnippetEntity)
