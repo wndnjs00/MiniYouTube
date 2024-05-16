@@ -1,5 +1,6 @@
 package com.example.miniyoutube.ui.videodetail
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -30,14 +31,18 @@ class VideoDetailActivity : AppCompatActivity() {
 
 
         getIntentData()
-        saveLikes(SnippetEntity(videoId = "", channelId = "", title = "타이틀", description = "설명"))
+        saveLikes(SnippetEntity(videoId = "", channelId = "", title = "타이틀", description = "설명", url = ""))
         setContentView(binding.root)
     }
 
 
     private fun getIntentData(){
-        // 보낸 데이터 받아오기
-        val youtubeData = intent.getParcelableExtra<Snippet>(EXTRA_YOUTUBE)
+        // 보낸 데이터 받아오기 (FavoriteItem 받아오는걸로 수정)
+        val youtubeData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(EXTRA_YOUTUBE, Snippet::class.java)
+        } else {
+            intent.getParcelableExtra(EXTRA_YOUTUBE) as? Snippet
+        }
 
         with(binding){
             Glide.with(this@VideoDetailActivity)

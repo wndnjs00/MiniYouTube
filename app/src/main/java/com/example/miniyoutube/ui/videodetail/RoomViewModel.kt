@@ -17,17 +17,9 @@ class RoomViewModel @Inject constructor(private val snippetDao : SnippetDao) : V
     val getLikeData : LiveData<List<SnippetEntity>> = _getLikeData
 
 
-    fun getAllData() = viewModelScope.launch {
-        _getLikeData.value = snippetDao.getAll()
-    }
-
     fun saveLikeData(snippetEntity: SnippetEntity) = viewModelScope.launch {
         snippetDao.insert(snippetEntity)
     }
 
-
-    fun deleteLikeData(videoId: String) = viewModelScope.launch {
-        snippetDao.deleteSnippet(videoId)
-    }
 
 }
