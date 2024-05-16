@@ -23,33 +23,40 @@ class VideoDetailActivity : AppCompatActivity() {
 
     private val roomViewModel by viewModels<RoomViewModel>()
 
+    private lateinit var favoriteItem : FavoriteItem
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         getIntentData()
-        saveLikes(StorageEntity(videoId = "", channelId = "", title = "타이틀", description = "설명", url = ""))
+        saveLikes(StorageEntity(videoId = favoriteItem.videoId, channelId = favoriteItem.channelId, title = favoriteItem.title, description = favoriteItem.description, url = favoriteItem.url))
         setContentView(binding.root)
     }
 
 
     private fun getIntentData(){
         // 보낸 데이터 받아오기
-        val youtubeData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(Constants.FAVORITE_ITEM_KEY, FavoriteItem::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(Constants.FAVORITE_ITEM_KEY, FavoriteItem::class.java)?.let { favorite ->
+                favoriteItem = favorite
+            }
         } else {
-            intent.getParcelableExtra(Constants.FAVORITE_ITEM_KEY) as? FavoriteItem
+            intent.getParcelableExtra<FavoriteItem>(Constants.FAVORITE_ITEM_KEY)?.let { favorite ->
+                favoriteItem = favorite
+            }
         }
+
 
         with(binding){
             Glide.with(this@VideoDetailActivity)
-                .load(youtubeData?.url)
+                .load(favoriteItem.url)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(detailCardViewIv)
 
-            detailVideoTitle.text = youtubeData?.title
-            detailVideoContent.text = youtubeData?.description
+            detailVideoTitle.text = favoriteItem.title
+            detailVideoContent.text = favoriteItem.description
         }
 
     }
