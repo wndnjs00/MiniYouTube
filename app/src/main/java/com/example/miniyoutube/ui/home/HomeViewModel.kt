@@ -18,31 +18,31 @@ class HomeViewModel @Inject constructor(
     private val youtubeRepository: YoutubeRepository
 ) : ViewModel() {
 
-//    private val default = MutableLiveData<YoutubeVideoInfo>()
-//    private val sport = MutableLiveData<YoutubeVideoInfo>()
-//    private val movie = MutableLiveData<YoutubeVideoInfo>()
-//    private val music = MutableLiveData<YoutubeVideoInfo>()
-//    private val pet = MutableLiveData<YoutubeVideoInfo>()
-//    private val drama = MutableLiveData<YoutubeVideoInfo>()
-//
-//    fun requestVideoPosition(videoCategoryId: String){
-//        viewModelScope.launch {
-//            val resultYoutubeVideo = youtubeRepository.requestVideo(videoCategoryId)
-//            when(resultYoutubeVideo){
-//
-//            }
-//        }
-//    }
 
-    private val _youtubeVideo = MutableLiveData<YoutubeVideoInfo>()
-    val youtubeVideo: LiveData<YoutubeVideoInfo>
-        get() = _youtubeVideo
+    private val _mostPopularVideo = MutableLiveData<YoutubeVideoInfo>()
+    val mostPopularVideo: LiveData<YoutubeVideoInfo>
+        get() = _mostPopularVideo
+
+    private val _categoryVideo = MutableLiveData<YoutubeVideoInfo>()
+    val categoryVideo: LiveData<YoutubeVideoInfo>
+        get() = _categoryVideo
 
 
-    fun requestVideo(videoCategoryId: String) {
-        viewModelScope.launch{//비동기 실행
-            val resultYoutubeVideo = youtubeRepository.requestVideo(videoCategoryId)
-            _youtubeVideo.value = resultYoutubeVideo
+    fun requestVideo(videoCategoryId: String, selectVideo: SelectVideo) {
+        when (selectVideo) {
+            SelectVideo.HEADING -> {
+                viewModelScope.launch {
+                    val resultYoutubeVideo = youtubeRepository.requestVideo(videoCategoryId)
+                    _mostPopularVideo.value = resultYoutubeVideo
+                }
+            }
+
+            SelectVideo.CATEGORY -> {
+                viewModelScope.launch {
+                    val resultYoutubeVideo = youtubeRepository.requestVideo(videoCategoryId)
+                    _categoryVideo.value = resultYoutubeVideo
+                }
+            }
         }
     }
 }

@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.miniyoutube.data.model.remote.Item
 import com.example.miniyoutube.data.model.remote.TrendItem
-import com.example.miniyoutube.databinding.ItemListMainTitleBinding
+import com.example.miniyoutube.databinding.ItemListVarBinding
 
 class CategoryRecyclerViewAdapter(
     private val homeImageClickListener: HomeImageClickListener
@@ -15,15 +14,9 @@ class CategoryRecyclerViewAdapter(
     var youtubeVideoList: List<TrendItem> = listOf()
 
     class CategoryViewHolder(
-        private var binding: ItemListMainTitleBinding,
-        private val homeImageClickListener: HomeImageClickListener
+        private var binding: ItemListVarBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener {
-                homeImageClickListener.onClickItem(youtubeVideoList = it)
-            }
-        }
 
         fun bind(youtubeVideoList: TrendItem) {
             Glide.with(binding.root.context).load(youtubeVideoList.snippet.thumbnails.medium.url)
@@ -35,8 +28,7 @@ class CategoryRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return CategoryViewHolder(
-            binding = ItemListMainTitleBinding.inflate(layoutInflater, parent, false),
-            homeImageClickListener = homeImageClickListener
+            binding = ItemListVarBinding.inflate(layoutInflater, parent, false)
         )
     }
 
@@ -45,10 +37,13 @@ class CategoryRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        return holder.bind(youtubeVideoList[position])
+        holder.bind(youtubeVideoList[position])
+        holder.itemView.setOnClickListener {
+            homeImageClickListener.onClickItem(youtubeVideoList[position])
+        }
     }
 
-    fun categorysubmitList(item: List<TrendItem>){
+    fun categorysubmitList(item: List<TrendItem>) {
         this.youtubeVideoList = item
         notifyDataSetChanged()
     }

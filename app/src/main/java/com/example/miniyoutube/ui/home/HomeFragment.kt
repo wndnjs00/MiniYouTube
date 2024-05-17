@@ -1,5 +1,6 @@
 package com.example.miniyoutube.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,13 @@ import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
 import com.example.miniyoutube.data.model.remote.TrendItem
 import com.example.miniyoutube.databinding.FragmentHomeBinding
-import com.example.miniyoutube.ui.home.recyclerview.CategoryChannelRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategoryRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
 import com.example.miniyoutube.ui.home.recyclerview.HeadingRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.HomeImageClickListener
 import com.example.miniyoutube.ui.model.FavoriteItem
+import com.example.miniyoutube.ui.videodetail.VideoDetailActivity
+import com.example.miniyoutube.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +26,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var headingRecyclerViewAdapter: HeadingRecyclerViewAdapter
     private lateinit var categoryRecyclerViewAdapter: CategoryRecyclerViewAdapter
-    private lateinit var categoryChannelRecyclerViewAdapter: CategoryChannelRecyclerViewAdapter
     private val homeViewModle: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -40,24 +41,17 @@ class HomeFragment : Fragment() {
 
         headingRecyclerViewAdapter = headingRecyclerViewAdapter()
         categoryRecyclerViewAdapter = categoryRecyclerViewAdapter()
-        categoryChannelRecyclerViewAdapter = categoryChannelRecyclerViewAdapter()
 
-
-        homeViewModle.requestVideo("0") //요청(0 = 디폴트)
-        homeViewModle.requestVideo("17") //마지막 데이터를 업데이트 (같은 requestVideo 사용
-
+        homeViewModle.requestVideo("0",SelectVideo.HEADING)
 
         setSpinner()
         binding.rcHeadingView.adapter = headingRecyclerViewAdapter
         setUpObserve()
-
-
-        binding.rcCategoryView.adapter = categoryChannelRecyclerViewAdapter
     }
 
 
     private fun setSpinner() {
-        val list = listOf<String>("Sports", "Movies", "Music", "Pets&Animals", "Drama")
+        val list = listOf<String>("Sports", "Gaming", "Music", "Pets&Animals", "Howto&Style")
         //api 호출해서 오는 아이템 > 뷰모델
         binding.spHomeBackground.adapter =
             CategorySpinnerAdapter(requireContext(), R.layout.item_spinner_home, list)
@@ -72,23 +66,23 @@ class HomeFragment : Fragment() {
                     val value = binding.spHomeBackground.getItemAtPosition(position).toString()
                     when (position) {
                         0 -> {
-                            homeViewModle.requestVideo("17")
+                            homeViewModle.requestVideo("17", SelectVideo.CATEGORY)
                         }
 
                         1 -> {
-                            homeViewModle.requestVideo("30")
+                            homeViewModle.requestVideo("20", SelectVideo.CATEGORY)
                         }
 
                         2 -> {
-                            homeViewModle.requestVideo("10")
+                            homeViewModle.requestVideo("10", SelectVideo.CATEGORY)
                         }
 
                         3 -> {
-                            homeViewModle.requestVideo("15")
+                            homeViewModle.requestVideo("15", SelectVideo.CATEGORY)
                         }
 
                         4 -> {
-                            homeViewModle.requestVideo("36")
+                            homeViewModle.requestVideo("26", SelectVideo.CATEGORY)
                         }
                     }
                 }
@@ -96,17 +90,17 @@ class HomeFragment : Fragment() {
                     //선택되지 않은 경우
                 }
             }
-        setUpObserve()
         binding.rcSearchView.adapter = categoryRecyclerViewAdapter
-        //화면 전환 > 값이 바뀜 > 리사이클려뷰 갱신
     }
 
     private fun setUpObserve() {
-        homeViewModle.youtubeVideo.observe(viewLifecycleOwner) {
-            //데이터가 변경될 때 (데이터가 들어왔을때)
-            //요청 >  < 데이터를 가져옴 + observe
+        homeViewModle.mostPopularVideo.observe(viewLifecycleOwner) {
             it.items?.let {
                 headingRecyclerViewAdapter.headingsubmitList(it)
+            }
+        }
+        homeViewModle.categoryVideo.observe(viewLifecycleOwner){
+            it.items?.let {
                 categoryRecyclerViewAdapter.categorysubmitList(it)
             }
         }
@@ -114,24 +108,40 @@ class HomeFragment : Fragment() {
 
     private fun headingRecyclerViewAdapter(): HeadingRecyclerViewAdapter {
         return HeadingRecyclerViewAdapter(object : HomeImageClickListener {
-            override fun onClickItem(youtubeVideoList: View) {
+            override fun onClickItem(youtubeVideoList: TrendItem) {
 
+                val resultItem = FavoriteItem(
+                    videoId = youtubeVideoList.id.toString(),
+                    channelId = youtubeVideoList.snippet.channelId,
+                    title = youtubeVideoList.snippet.title,
+                    description = youtubeVideoList.snippet.description,
+                    url = youtubeVideoList.snippet.thumbnails.medium.url
+                )
+
+                val intent = Intent(context, VideoDetailActivity::class.java)
+                intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
+
+                startActivity(intent)
             }
         })
     }
 
     private fun categoryRecyclerViewAdapter(): CategoryRecyclerViewAdapter {
         return CategoryRecyclerViewAdapter(object : HomeImageClickListener {
-            override fun onClickItem(youtubeVideoList: View) {
-                //
-            }
-        })
-    }
+            override fun onClickItem(youtubeVideoList: TrendItem) {
 
-    private fun categoryChannelRecyclerViewAdapter(): CategoryChannelRecyclerViewAdapter {
-        return CategoryChannelRecyclerViewAdapter(object : HomeImageClickListener{
-            override fun onClickItem(youtubeVideoList: View) {
-                //
+                val resultItem = FavoriteItem(
+                    videoId = youtubeVideoList.id,
+                    channelId = youtubeVideoList.snippet.channelId,
+                    title = youtubeVideoList.snippet.title,
+                    description = youtubeVideoList.snippet.description,
+                    url = youtubeVideoList.snippet.thumbnails.medium.url
+                )
+
+                val intent = Intent(context, VideoDetailActivity::class.java)
+                intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
+
+                startActivity(intent)
             }
         })
     }
