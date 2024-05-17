@@ -1,6 +1,8 @@
 package com.example.miniyoutube.ui.myvideo
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -85,6 +87,12 @@ class MyVideoFragment : Fragment() {
         startActivity(Intent(requireActivity(), VideoDetailActivity::class.java).apply {
             this.putExtra(Constants.FAVORITE_ITEM_KEY, favoriteItem)
         })
+
+        if (Build.VERSION.SDK_INT >= 34) {
+            requireActivity().overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        }else{
+            requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
     }
 
     private fun deleteSnippetEntity(favoriteItme: FavoriteItem): Boolean {

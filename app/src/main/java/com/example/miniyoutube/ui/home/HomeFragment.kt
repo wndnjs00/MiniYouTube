@@ -1,6 +1,8 @@
 package com.example.miniyoutube.ui.home
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -137,5 +139,11 @@ class HomeFragment : Fragment() {
         val intent = Intent(context, VideoDetailActivity::class.java)
         intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
         startActivity(intent)
+
+        if (Build.VERSION.SDK_INT >= 34) {
+            requireActivity().overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        }else{
+            requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
     }
 }
