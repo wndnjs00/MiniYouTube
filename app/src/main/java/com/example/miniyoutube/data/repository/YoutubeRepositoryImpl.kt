@@ -2,6 +2,7 @@ package com.example.miniyoutube.data.repository
 
 import com.example.miniyoutube.data.service.YoutubeApiService
 import com.example.miniyoutube.data.model.remote.YoutubeVideo
+import com.example.miniyoutube.data.model.remote.YoutubeVideoInfo
 import javax.inject.Inject
 
 class YoutubeRepositoryImpl @Inject constructor(
@@ -11,8 +12,7 @@ class YoutubeRepositoryImpl @Inject constructor(
         return youtubeApiService.requestSearch(query = q, videoOrder = "relevance", videoType = "video", maxResults = 10, videoCategoryId = videoCategoryId, part = "snippet")
     }
 
-    override suspend fun requestVideo(videoCategoryId: String): YoutubeVideo {
-        return youtubeApiService.requestVideo(maxResults = 50, part = "snippet", videoCategoryId = videoCategoryId)
+    override suspend fun requestVideo(videoCategoryId:String): YoutubeVideoInfo { //고정된 값 _아래에서 고정
+        return youtubeApiService.requestVideo(videoCategoryId = videoCategoryId, maxResults = 5, part = "snippet", chart = "mostPopular" )
     }
-
 }
