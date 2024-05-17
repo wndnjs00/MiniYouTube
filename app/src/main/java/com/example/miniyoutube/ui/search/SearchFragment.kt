@@ -1,7 +1,9 @@
 package com.example.miniyoutube.ui.search
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -68,6 +70,13 @@ class SearchFragment : Fragment() {
             val intent = Intent(context, VideoDetailActivity::class.java)
             intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultList)
             startActivity(intent)
+
+            if (Build.VERSION.SDK_INT >= 34) {
+                requireActivity().overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            }else{
+                requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+
         })
         //viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
 

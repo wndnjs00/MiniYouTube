@@ -1,8 +1,11 @@
 package com.example.miniyoutube.ui.videodetail
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -26,12 +29,28 @@ class VideoDetailActivity : AppCompatActivity() {
     private lateinit var favoriteItem : FavoriteItem
 
 
+    private val onBackPressedCallback : OnBackPressedCallback = object : OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+
+            this.isEnabled = false
+            onBackPressedDispatcher.onBackPressed()
+
+            if (Build.VERSION.SDK_INT >= 34) {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            }else{
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         getIntentData()
         saveLikes(StorageEntity(videoId = favoriteItem.videoId, channelId = favoriteItem.channelId, title = favoriteItem.title, description = favoriteItem.description, url = favoriteItem.url))
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         setContentView(binding.root)
     }
 
