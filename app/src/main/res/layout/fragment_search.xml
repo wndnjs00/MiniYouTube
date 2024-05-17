@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="기본값"
+                android:text="초기화"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter" />
 
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="Shorts"
+                android:text="News"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -138,6 +138,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint = "@color/clr_0AFFA2"
+        android:visibility="gone"
+        android:src="@drawable/floating_button"
+        android:backgroundTint="@color/clr_151718"
+        android:layout_margin="10dp"
+        tools:ignore="ContentDescription" />
 
 
 

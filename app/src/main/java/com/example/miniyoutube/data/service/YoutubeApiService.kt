@@ -1,7 +1,7 @@
 package com.example.miniyoutube.data.service
 
-import com.example.miniyoutube.data.model.remote.YoutubeVideo
-import com.example.miniyoutube.data.model.remote.YoutubeVideoInfo
+import com.example.miniyoutube.data.model.remote.searchvideo.YoutubeVideo
+import com.example.miniyoutube.data.model.remote.videoinfo.YoutubeVideoInfo
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,7 +14,7 @@ interface YoutubeApiService {
         @Query("type") videoType: String,
         @Query("maxResults") maxResults: Int,
         @Query("videoCategoryId") videoCategoryId: String,
-        @Query("part") part: String
+        @Query("part") part: String,
     ) : YoutubeVideo
 
 
