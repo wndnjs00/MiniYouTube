@@ -1,6 +1,7 @@
 package com.example.miniyoutube.data.model.remote
 
 import android.os.Parcelable
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -17,11 +18,11 @@ data class YoutubeVideo(
 @Parcelize
 data class Item(
     @SerializedName("id")
-    val id : Id,
+    val id: Id,
     @SerializedName("snippet")
     val snippet: Snippet,
     @SerializedName("contentDetails")
-    val contentDetails : ContentDetails
+    val contentDetails: ContentDetails
 ) : Parcelable
 
 @Parcelize
@@ -30,10 +31,11 @@ data class ContentDetails(
     val duration: String
 ) : Parcelable
 
+
 @Parcelize
 data class Id(
     @SerializedName("kind")
-    val kind : String,
+    val kind: String,
     @SerializedName("videoId")
     val videoId: String
 ) : Parcelable
@@ -59,7 +61,7 @@ data class Snippet(
     @SerializedName("defaultLanguage")
     val defaultLanguage: String,
     @SerializedName("localized")
-    val localized : Localized,
+    val localized: Localized,
     @SerializedName("tags")
     val tags: List<String>
 ) : Parcelable
@@ -70,11 +72,12 @@ data class Localized(
     val title: String,
     @SerializedName("description")
     val description: String
-): Parcelable
+) : Parcelable
+
 @Parcelize
 data class Thumbnails(
     @SerializedName("medium")
-    val medium : Medium
+    val medium: Medium
 ) : Parcelable
 
 @Parcelize
@@ -85,4 +88,42 @@ data class Medium(
     val width: Int,
     @SerializedName("height")
     val height: Int
-): Parcelable
+) : Parcelable
+
+@Parcelize
+data class YoutubeVideoInfo(
+    @SerializedName("kind")
+    val kind: String,
+    @SerializedName("etag")
+    val etag: String,
+    @SerializedName("items")
+    val items: List<TrendItem>?
+) : Parcelable
+
+@Parcelize
+data class TrendItem(
+    @SerializedName("kind")
+    val kind: String,
+    @SerializedName("etag")
+    val etag: String,
+    @SerializedName("id")
+    val id: String,
+
+    @SerializedName("snippet")
+    val snippet: Snippet,
+
+    @SerializedName("tags")
+    val tags: List<String>,
+
+    @SerializedName("contentDetails")
+    val contentDetails: ContentDetails,
+
+    @SerializedName("statistics")
+    val statistics: Statistics
+) : Parcelable
+
+@Parcelize
+data class Statistics(
+    @SerializedName("viewCount")
+    val viewCount: String? = ""
+) : Parcelable

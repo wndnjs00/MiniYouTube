@@ -12,23 +12,23 @@
         android:id="@+id/tv_headingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="Most Popular Videos"
+        android:text="@string/home_headingTitle"
         android:textColor="@color/clr_8A8A8A"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_headingView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_headingTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tv_headingTitle"
+        tools:listitem="@layout/item_list_hori" />
 
     <Spinner
         android:id="@+id/sp_homeBackground"
@@ -38,37 +38,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rc_headingView" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_searchView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_marginTop="15sp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sp_homeBackground" />
+        app:layout_constraintTop_toBottomOf="@id/sp_homeBackground"
+        tools:listitem="@layout/item_list_var" />
 
-    <TextView
-        android:id="@+id/tv_categoryTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Channels by Category"
-        android:textColor="@color/clr_8A8A8A"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rc_searchView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_categoryView"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_categoryTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
