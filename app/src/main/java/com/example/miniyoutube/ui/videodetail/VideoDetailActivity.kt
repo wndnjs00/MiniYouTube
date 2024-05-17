@@ -115,7 +115,7 @@ class VideoDetailActivity : AppCompatActivity() {
         binding.detailShareBtn.setOnClickListener {
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, favoriteItem.url)
+                putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=${favoriteItem.videoId}")
                 type = "text/plain"
             }
             startActivity(Intent.createChooser(shareIntent, null))
