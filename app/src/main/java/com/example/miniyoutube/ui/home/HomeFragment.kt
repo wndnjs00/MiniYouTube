@@ -8,12 +8,14 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
+import com.example.miniyoutube.data.model.remote.TrendItem
 import com.example.miniyoutube.databinding.FragmentHomeBinding
 import com.example.miniyoutube.ui.home.recyclerview.CategoryChannelRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategoryRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter
 import com.example.miniyoutube.ui.home.recyclerview.HeadingRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.HomeImageClickListener
+import com.example.miniyoutube.ui.model.FavoriteItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,18 +37,21 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModle.requestVideo("0") // 요청
-        homeViewModle.requestVideo("17")
 
         headingRecyclerViewAdapter = headingRecyclerViewAdapter()
         categoryRecyclerViewAdapter = categoryRecyclerViewAdapter()
         categoryChannelRecyclerViewAdapter = categoryChannelRecyclerViewAdapter()
 
+
+        homeViewModle.requestVideo("0") //요청(0 = 디폴트)
+        homeViewModle.requestVideo("17") //마지막 데이터를 업데이트 (같은 requestVideo 사용
+
+
         setSpinner()
         binding.rcHeadingView.adapter = headingRecyclerViewAdapter
         setUpObserve()
 
-        binding.rcSearchView.adapter = categoryRecyclerViewAdapter
+
         binding.rcCategoryView.adapter = categoryChannelRecyclerViewAdapter
     }
 
@@ -92,6 +97,7 @@ class HomeFragment : Fragment() {
                 }
             }
         setUpObserve()
+        binding.rcSearchView.adapter = categoryRecyclerViewAdapter
         //화면 전환 > 값이 바뀜 > 리사이클려뷰 갱신
     }
 
@@ -109,7 +115,7 @@ class HomeFragment : Fragment() {
     private fun headingRecyclerViewAdapter(): HeadingRecyclerViewAdapter {
         return HeadingRecyclerViewAdapter(object : HomeImageClickListener {
             override fun onClickItem(youtubeVideoList: View) {
-                //클릭이벤트
+
             }
         })
     }
