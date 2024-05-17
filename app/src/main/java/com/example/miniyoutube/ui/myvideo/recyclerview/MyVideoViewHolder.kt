@@ -24,7 +24,7 @@ class MyVideoViewHolder(
     ) {
 
         Glide.with(itemView.context)
-            .load(R.drawable.ic_launcher_background)
+            .load(favoriteItme.url)
             .centerCrop()
             .into(binding.ivItem)
         binding.tvContentItem.text = favoriteItme.title
