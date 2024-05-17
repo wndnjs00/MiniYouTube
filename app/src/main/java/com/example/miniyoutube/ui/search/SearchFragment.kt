@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +32,7 @@ class SearchFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: SearchAdapter
+    private val imme by lazy { requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -124,6 +127,11 @@ class SearchFragment : Fragment() {
         binding.floatButton.setOnClickListener {
             binding.recyclerview.scrollToPosition(0)
         }
+
+        binding.searchButton.setOnClickListener {
+            imme.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+            chipGroupType(ChipType.FIRST)
+        }
     }
 
     private fun chipGroupType(type: ChipType) {
@@ -131,6 +139,7 @@ class SearchFragment : Fragment() {
             binding.recyclerview.isVisible = false
             binding.emptyMessage.isVisible = true
             //viewModel.getSearch(query = "", "")
+            Toast.makeText(context, "초기화 버튼 입니다. 다른 항목을 선택해주세요.", Toast.LENGTH_SHORT).show()
         } else {
             binding.recyclerview.isVisible = true
             binding.emptyMessage.isVisible = false
