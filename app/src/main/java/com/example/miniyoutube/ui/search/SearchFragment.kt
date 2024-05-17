@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
+import com.example.miniyoutube.data.model.remote.searchvideo.YoutubeVideo
 import com.example.miniyoutube.databinding.FragmentSearchBinding
 import com.example.miniyoutube.ui.model.FavoriteItem
 import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
@@ -60,7 +63,7 @@ class SearchFragment : Fragment() {
     private fun initViews() {
         adapter = SearchAdapter(onClick = {
             val resultList = FavoriteItem(
-                videoId = it.id.toString(),
+                videoId = it.id.videoId,
                 channelId = it.snippet.channelId,
                 title = it.snippet.title,
                 description = it.snippet.description,
@@ -103,6 +106,24 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+
+        binding.recyclerview.setOnScrollChangeListener { view, x, y, ox, oy ->
+            if(y > oy) {
+                val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 300 }
+                binding.floatButton.startAnimation(fadeIn)
+                binding.floatButton.isVisible = true
+            }
+
+            if(y <= oy) {
+                val fadeIn = AlphaAnimation(1f, 0f).apply { duration = 300 }
+                binding.floatButton.startAnimation(fadeIn)
+                binding.floatButton.isVisible = false
+            }
+        }
+
+        binding.floatButton.setOnClickListener {
+            binding.recyclerview.scrollToPosition(0)
+        }
     }
 
     private fun chipGroupType(type: ChipType) {
@@ -113,6 +134,9 @@ class SearchFragment : Fragment() {
         } else {
             binding.recyclerview.isVisible = true
             binding.emptyMessage.isVisible = false
+
+
+
             when(type) {
                 ChipType.FIRST -> {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
@@ -130,7 +154,7 @@ class SearchFragment : Fragment() {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "19")
                 }
                 ChipType.SIXTH -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "42")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "25")
                 }
             }
         }

@@ -11,7 +11,7 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.miniyoutube.R
-import com.example.miniyoutube.data.model.remote.TrendItem
+import com.example.miniyoutube.data.model.remote.videoinfo.TrendItem
 import com.example.miniyoutube.databinding.FragmentHomeBinding
 import com.example.miniyoutube.ui.home.recyclerview.CategoryRecyclerViewAdapter
 import com.example.miniyoutube.ui.home.recyclerview.CategorySpinnerAdapter

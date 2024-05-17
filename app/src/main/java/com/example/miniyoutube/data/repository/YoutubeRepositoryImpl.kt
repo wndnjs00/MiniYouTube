@@ -1,8 +1,8 @@
 package com.example.miniyoutube.data.repository
 
 import com.example.miniyoutube.data.service.YoutubeApiService
-import com.example.miniyoutube.data.model.remote.YoutubeVideo
-import com.example.miniyoutube.data.model.remote.YoutubeVideoInfo
+import com.example.miniyoutube.data.model.remote.searchvideo.YoutubeVideo
+import com.example.miniyoutube.data.model.remote.videoinfo.YoutubeVideoInfo
 import javax.inject.Inject
 
 class YoutubeRepositoryImpl @Inject constructor(

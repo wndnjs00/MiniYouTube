@@ -1,6 +1,5 @@
 package com.example.miniyoutube.ui.videodetail
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.miniyoutube.R
 import com.example.miniyoutube.data.model.local.StorageEntity
-import com.example.miniyoutube.data.model.remote.Snippet
 import com.example.miniyoutube.databinding.ActivityVideoDetailBinding
 import com.example.miniyoutube.ui.model.FavoriteItem
 import com.example.miniyoutube.util.Constants
