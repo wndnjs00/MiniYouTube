@@ -43,16 +43,14 @@ class HomeFragment : Fragment() {
         categoryRecyclerViewAdapter = categoryRecyclerViewAdapter()
 
         homeViewModle.requestVideo("0",SelectVideo.HEADING)
-
-        setSpinner()
         binding.rcHeadingView.adapter = headingRecyclerViewAdapter
+        setSpinner()
         setUpObserve()
     }
 
 
     private fun setSpinner() {
         val list = listOf<String>("Sports", "Gaming", "Music", "Pets&Animals", "Howto&Style")
-        //api 호출해서 오는 아이템 > 뷰모델
         binding.spHomeBackground.adapter =
             CategorySpinnerAdapter(requireContext(), R.layout.item_spinner_home, list)
         binding.spHomeBackground.onItemSelectedListener =
@@ -110,18 +108,8 @@ class HomeFragment : Fragment() {
         return HeadingRecyclerViewAdapter(object : HomeImageClickListener {
             override fun onClickItem(youtubeVideoList: TrendItem) {
 
-                val resultItem = FavoriteItem(
-                    videoId = youtubeVideoList.id.toString(),
-                    channelId = youtubeVideoList.snippet.channelId,
-                    title = youtubeVideoList.snippet.title,
-                    description = youtubeVideoList.snippet.description,
-                    url = youtubeVideoList.snippet.thumbnails.medium.url
-                )
+                putIntentData(youtubeVideoList)
 
-                val intent = Intent(context, VideoDetailActivity::class.java)
-                intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
-
-                startActivity(intent)
             }
         })
     }
@@ -130,19 +118,24 @@ class HomeFragment : Fragment() {
         return CategoryRecyclerViewAdapter(object : HomeImageClickListener {
             override fun onClickItem(youtubeVideoList: TrendItem) {
 
-                val resultItem = FavoriteItem(
-                    videoId = youtubeVideoList.id,
-                    channelId = youtubeVideoList.snippet.channelId,
-                    title = youtubeVideoList.snippet.title,
-                    description = youtubeVideoList.snippet.description,
-                    url = youtubeVideoList.snippet.thumbnails.medium.url
-                )
+                putIntentData(youtubeVideoList)
 
-                val intent = Intent(context, VideoDetailActivity::class.java)
-                intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
-
-                startActivity(intent)
             }
         })
+    }
+
+    private fun putIntentData(youtubeVideoList: TrendItem){
+
+        val resultItem = FavoriteItem(
+            videoId = youtubeVideoList.id,
+            channelId = youtubeVideoList.snippet.channelId,
+            title = youtubeVideoList.snippet.title,
+            description = youtubeVideoList.snippet.description,
+            url = youtubeVideoList.snippet.thumbnails.medium.url
+        )
+
+        val intent = Intent(context, VideoDetailActivity::class.java)
+        intent.putExtra(Constants.FAVORITE_ITEM_KEY, resultItem)
+        startActivity(intent)
     }
 }
