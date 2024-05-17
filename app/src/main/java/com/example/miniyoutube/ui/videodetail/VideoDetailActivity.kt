@@ -36,7 +36,7 @@ class VideoDetailActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
 
             if (Build.VERSION.SDK_INT >= 34) {
-                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, android.R.anim.fade_in, android.R.anim.fade_out)
             }else{
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
