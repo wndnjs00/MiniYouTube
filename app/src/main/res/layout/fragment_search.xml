@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="@string/init_chip"
+                android:text="@string/default_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter" />
 

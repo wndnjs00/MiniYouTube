@@ -138,8 +138,7 @@ class SearchFragment : Fragment() {
         if(binding.searchEditText.text.isEmpty()) {
             binding.recyclerview.isVisible = false
             binding.emptyMessage.isVisible = true
-            //viewModel.getSearch(query = "", "")
-            Toast.makeText(context, "초기화 버튼 입니다. 다른 항목을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "검색어를 입력해주세요.", Toast.LENGTH_SHORT).show()
         } else {
             binding.recyclerview.isVisible = true
             binding.emptyMessage.isVisible = false
@@ -148,7 +147,7 @@ class SearchFragment : Fragment() {
 
             when(type) {
                 ChipType.FIRST -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "24")
                 }
                 ChipType.SECOND -> {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")
