@@ -23,9 +23,11 @@ class VideoDetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityVideoDetailBinding.inflate(layoutInflater) }
 
-    private val roomViewModel by viewModels<RoomViewModel>()
+    private val detailViewModel by viewModels<DetailViewModel>()
 
     private lateinit var favoriteItem: FavoriteItem
+
+    private var isLiked = false
 
 
     private val onBackPressedCallback: OnBackPressedCallback =
@@ -63,6 +65,7 @@ class VideoDetailActivity : AppCompatActivity() {
                 url = favoriteItem.url
             )
         )
+        checkVideoLiked()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         setContentView(binding.root)
     }
@@ -95,18 +98,52 @@ class VideoDetailActivity : AppCompatActivity() {
 
     }
 
+
     private fun saveLikes(storageEntity: StorageEntity) {
 
         binding.detailLikeBtn.setOnClickListener {
 
-            // viewModel을 통해 좋아요한 아이템을 저장
-            roomViewModel.saveLikeData(storageEntity)
-            Log.d("데이터 저장", roomViewModel.saveLikeData(storageEntity).toString())
-            Snackbar.make(binding.detailVideoContent, "My Video에 추가되었습니다", Snackbar.LENGTH_SHORT)
-                .show()
-        }
+            // isLiked 뒤집기 (isLiked가 true면 false로, false면 ture로)
+            isLiked = !isLiked
+            // storageEntity.isLike가 isLiked상태와 같도록 업데이트
+            storageEntity.isLike = isLiked
 
+            if (isLiked){
+                // Room 사용해서 좋아요 데이터 저장
+                detailViewModel.saveLikeData(storageEntity)
+                Snackbar.make(binding.detailVideoContent, "My Video에 추가되었습니다", Snackbar.LENGTH_SHORT).show()
+            }else{
+                // Room 사용해서 좋아요 데이터삭제
+                detailViewModel.deleteLikeData(favoriteItem.videoId)
+                Snackbar.make(binding.detailVideoContent, "My Video에서 삭제되었습니다", Snackbar.LENGTH_SHORT).show()
+            }
+
+            // 버튼 색상 업데이트
+            updateLikeButton()
+        }
     }
+
+
+    private fun checkVideoLiked(){
+
+        detailViewModel.isVideoLiked(favoriteItem.videoId).observe(this){
+            // LiveData에서 보낸값(좋아요 클릭했는지 안했는지)으로 isLiked값 업데이트
+            isLiked = it
+            Log.d("it_data__", it.toString())
+            // 버튼 색상 업데이트
+            updateLikeButton()
+        }
+    }
+
+    private fun updateLikeButton() {
+        if (isLiked) {
+            binding.detailLikeBtn.setBackgroundResource(R.drawable.corner_button2)
+        } else {
+            binding.detailLikeBtn.setBackgroundResource(R.drawable.corner_button)
+        }
+    }
+
+
 
     private fun btnShare() {
         // 공유버튼 눌렀을때
