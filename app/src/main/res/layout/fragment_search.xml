@@ -18,10 +18,15 @@
         android:textSize="16sp"
         android:textColor="@color/white"
         android:padding="10dp"
-        android:hint="검색어를 입력해주세요."
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:hint="@string/please_search"
         android:textColorHint="@color/white"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        tools:ignore="Autofill" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/search_button"
@@ -62,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="초기화"
+                android:text="@string/default_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter" />
 
@@ -71,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="영화"
+                android:text="@string/movie_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -80,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="게임"
+                android:text="@string/game_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -89,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="스포츠"
+                android:text="@string/sport_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
@@ -99,7 +104,7 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
                 app:chipIconEnabled="true"
-                android:text="여행, 이벤트"
+                android:text="@string/event_chip"
                 app:chipIconTint="@color/chip_filter"/>
 
             <com.google.android.material.chip.Chip
@@ -107,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.miniyoutube.Chip"
-                android:text="News"
+                android:text="@string/news_chip"
                 app:chipIconEnabled="true"
                 app:chipIconTint="@color/chip_filter"/>
 
