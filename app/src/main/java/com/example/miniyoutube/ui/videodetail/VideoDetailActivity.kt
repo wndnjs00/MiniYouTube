@@ -15,6 +15,9 @@ import com.example.miniyoutube.databinding.ActivityVideoDetailBinding
 import com.example.miniyoutube.ui.model.FavoriteItem
 import com.example.miniyoutube.util.Constants
 import com.google.android.material.snackbar.Snackbar
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -52,7 +55,7 @@ class VideoDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(binding.root)
 
         getIntentData()
         btnShare()
@@ -67,7 +70,7 @@ class VideoDetailActivity : AppCompatActivity() {
         )
         checkVideoLiked()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-        setContentView(binding.root)
+        youtubeVideo()
     }
 
 
@@ -87,10 +90,11 @@ class VideoDetailActivity : AppCompatActivity() {
 
 
         with(binding) {
-            Glide.with(this@VideoDetailActivity)
-                .load(favoriteItem.url)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(detailCardViewIv)
+//            개인학습관련으로 남겨놓음
+//            Glide.with(this@VideoDetailActivity)
+//                .load(favoriteItem.url)
+//                .placeholder(R.drawable.ic_launcher_foreground)
+//                .into(detailCardViewIv)
 
             detailVideoTitle.text = favoriteItem.title
             detailVideoContent.text = favoriteItem.description
@@ -153,6 +157,22 @@ class VideoDetailActivity : AppCompatActivity() {
             }
             startActivity(Intent.createChooser(shareIntent, null))
         }
+    }
+
+
+    // youtube video player 적용함수
+    private fun youtubeVideo(){
+        val youtubePlayerView : YouTubePlayerView = binding.youtubePlayerView
+        lifecycle.addObserver(youtubePlayerView)
+
+        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+
+                val videoId = favoriteItem.videoId
+                youTubePlayer.loadVideo(videoId, 0f)
+            }
+        })
+
     }
 
 }
