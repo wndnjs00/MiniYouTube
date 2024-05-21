@@ -1,21 +1,26 @@
 package com.example.miniyoutube.ui.search
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miniyoutube.ui.main.MainActivity
 import com.example.miniyoutube.R
-import com.example.miniyoutube.data.model.remote.searchvideo.YoutubeVideo
+import com.example.miniyoutube.data.model.remote.searchvideo.Item
 import com.example.miniyoutube.databinding.FragmentSearchBinding
 import com.example.miniyoutube.ui.model.FavoriteItem
 import com.example.miniyoutube.ui.search.recyclerview.SearchAdapter
@@ -30,6 +35,10 @@ class SearchFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: SearchAdapter
+    private val imme by lazy { requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
+    private var document : Int = 0
+    private var videoNumber : String = "0"
+    private lateinit var contactList: ArrayList<Item>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -81,10 +90,10 @@ class SearchFragment : Fragment() {
             }
 
         })
-        //viewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
 
         binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, ints ->
             val selectChip = chipGroup.checkedChipId
+            document = selectChip
             when (selectChip) {
                 R.id.fist_type -> {
                     chipGroupType(ChipType.FIRST)
@@ -121,8 +130,55 @@ class SearchFragment : Fragment() {
             }
         }
 
+        /*binding.recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() { pageIng 확장부분
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val cPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val totalCount = recyclerView.adapter!!.itemCount - 1
+
+                if(!binding.recyclerview.canScrollVertically(1) &&
+                    totalCount == cPosition) {
+                    when(document) {
+                        R.id.fist_type -> {
+                            videoNumber = "24"
+                        }
+                        R.id.second_type -> {
+                            videoNumber = "30"
+                        }
+                        R.id.three_type -> {
+                            videoNumber = "20"
+                        }
+                        R.id.fourth_type -> {
+                            videoNumber = "17"
+                        }
+                        R.id.fifth_type -> {
+                            videoNumber = "19"
+                        }
+                        R.id.sixth_type -> {
+                            videoNumber = "25"
+                        }
+                    }
+                }
+                viewModel.getSearchMore(query = binding.searchEditText.text.toString(), videoNumber)
+                viewModel.more.observe(viewLifecycleOwner) {
+                    contactList.addAll(it.items)
+                    adapter.submitList(contactList)
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+        })*/
+
         binding.floatButton.setOnClickListener {
             binding.recyclerview.scrollToPosition(0)
+        }
+
+        binding.searchButton.setOnClickListener {
+            imme.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+            document = R.id.fist_type
+            chipGroupType(ChipType.FIRST)
         }
     }
 
@@ -130,16 +186,15 @@ class SearchFragment : Fragment() {
         if(binding.searchEditText.text.isEmpty()) {
             binding.recyclerview.isVisible = false
             binding.emptyMessage.isVisible = true
-            //viewModel.getSearch(query = "", "")
+            Toast.makeText(context, "검색어 를 입력해 주세요.", Toast.LENGTH_SHORT).show()
         } else {
             binding.recyclerview.isVisible = true
             binding.emptyMessage.isVisible = false
 
 
-
             when(type) {
                 ChipType.FIRST -> {
-                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "0")
+                    viewModel.getSearch(query = binding.searchEditText.text.toString(), "24")
                 }
                 ChipType.SECOND -> {
                     viewModel.getSearch(query = binding.searchEditText.text.toString(), "30")
@@ -159,6 +214,7 @@ class SearchFragment : Fragment() {
             }
         }
         viewModel.search.observe(viewLifecycleOwner) {
+            contactList = it.items as ArrayList<Item>
             adapter.submitList(it.items)
             binding.recyclerview.adapter = adapter
         }

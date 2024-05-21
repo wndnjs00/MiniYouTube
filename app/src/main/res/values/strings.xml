@@ -14,4 +14,12 @@
     <string name="myvideo_favorite_title">My Favorite Videos</string>
     <string name="myvideo_empty_message">비어있어요.</string>
     <string name="home_headingTitle">Most Popular Videos</string>
+    <string name="please_search">검색어를 입력해주세요.</string>
+    <string name="init_chip">초기화</string>
+    <string name="movie_chip">영화</string>
+    <string name="game_chip">게임</string>
+    <string name="sport_chip">스포츠</string>
+    <string name="event_chip">여행, 이벤트</string>
+    <string name="news_chip">News</string>
+    <string name="default_chip">기본값</string>
 </resources>
