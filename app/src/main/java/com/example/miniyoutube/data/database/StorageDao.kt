@@ -20,7 +20,7 @@ interface StorageDao {
     suspend fun deleteSnippet(videoId: String)
 
     @Query("SELECT * FROM storage WHERE videoId = :videoId")
-    suspend fun videoLiked(videoId: String) : StorageEntity
+    suspend fun videoLiked(videoId: String) : StorageEntity?
 
 //    OnConflictStrategy.ABORT	충돌이 발생할 경우 처리 중단
 //    OnConflictStrategy.FAIL	충돌이 발생할 경우 실패처리

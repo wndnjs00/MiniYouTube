@@ -23,7 +23,7 @@ class VideoDetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityVideoDetailBinding.inflate(layoutInflater) }
 
-    private val detailViewModel by viewModels<DetailViewModel>()
+    private val videoDetailViewModel by viewModels<VideoDetailViewModel>()
 
     private lateinit var favoriteItem: FavoriteItem
 
@@ -105,16 +105,14 @@ class VideoDetailActivity : AppCompatActivity() {
 
             // isLiked 뒤집기 (isLiked가 true면 false로, false면 ture로)
             isLiked = !isLiked
-            // storageEntity.isLike가 isLiked상태와 같도록 업데이트
-            storageEntity.isLike = isLiked
 
             if (isLiked){
                 // Room 사용해서 좋아요 데이터 저장
-                detailViewModel.saveLikeData(storageEntity)
+                videoDetailViewModel.saveLikeData(storageEntity)
                 Snackbar.make(binding.detailVideoContent, "My Video에 추가되었습니다", Snackbar.LENGTH_SHORT).show()
             }else{
                 // Room 사용해서 좋아요 데이터삭제
-                detailViewModel.deleteLikeData(favoriteItem.videoId)
+                videoDetailViewModel.deleteLikeData(favoriteItem.videoId)
                 Snackbar.make(binding.detailVideoContent, "My Video에서 삭제되었습니다", Snackbar.LENGTH_SHORT).show()
             }
 
@@ -126,7 +124,7 @@ class VideoDetailActivity : AppCompatActivity() {
 
     private fun checkVideoLiked(){
 
-        detailViewModel.isVideoLiked(favoriteItem.videoId).observe(this){
+        videoDetailViewModel.isVideoLiked(favoriteItem.videoId).observe(this){
             // LiveData에서 보낸값(좋아요 클릭했는지 안했는지)으로 isLiked값 업데이트
             isLiked = it
             Log.d("it_data__", it.toString())

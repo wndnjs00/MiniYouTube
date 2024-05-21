@@ -10,7 +10,6 @@ data class StorageEntity(
     val channelId: String?,
     val title: String?,
     val description: String?,
-    val url: String?,
-    var isLike : Boolean = false
+    val url: String?
 )
 

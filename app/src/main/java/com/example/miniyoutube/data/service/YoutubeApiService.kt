@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface YoutubeApiService {
     @GET("v3/search")
     suspend fun requestSearch(
-        @Query("key") apiKey: String = "AIzaSyAFcV1rTQEDQbG3OrEeWzMDuHjYM-Xd3ig",
+        @Query("key") apiKey: String = "AIzaSyCW0ZJsUjoKlEocdr5a4oWSQg14cPE8pAU",
         @Query("q") query: String,
         @Query("order") videoOrder: String,
         @Query("type") videoType: String,
@@ -20,7 +20,7 @@ interface YoutubeApiService {
 
     @GET("v3/videos")
     suspend fun requestVideo(
-        @Query("key") apiKey: String = "AIzaSyAFcV1rTQEDQbG3OrEeWzMDuHjYM-Xd3ig",
+        @Query("key") apiKey: String = "AIzaSyCW0ZJsUjoKlEocdr5a4oWSQg14cPE8pAU",
         @Query("videoCategoryId") videoCategoryId: String,
         @Query("maxResults") maxResults: Int,
         @Query("part") part: String,

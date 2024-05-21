@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val storageDao : StorageDao) : ViewModel() {
+class VideoDetailViewModel @Inject constructor(private val storageDao : StorageDao) : ViewModel() {
 
     private val _getLikeData = MutableLiveData<List<StorageEntity>>()
     val getLikeData : LiveData<List<StorageEntity>> = _getLikeData
