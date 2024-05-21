@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(
     private val _search = MutableLiveData<YoutubeVideo>()
     val search : LiveData<YoutubeVideo> = _search
 
-    private lateinit var change : String
+    private var change : String = " "
 
     fun getSearch(query: String, videoTypeId: String) = viewModelScope.launch {
         val result = repository.requestSearch(query, videoTypeId)

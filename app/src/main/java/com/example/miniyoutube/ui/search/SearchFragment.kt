@@ -1,5 +1,6 @@
 package com.example.miniyoutube.ui.search
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -35,7 +36,7 @@ class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: SearchAdapter
     private val imme by lazy { requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
-    private var document = 0
+    private var document : Int = 0
     private var videoNumber : String = "0"
     private lateinit var contactList: ArrayList<Item>
 
@@ -129,15 +130,16 @@ class SearchFragment : Fragment() {
             }
         }
 
-        binding.recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
+        /*binding.recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() { pageIng 확장부분
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
-                //val cPosition = (binding.recyclerview.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
-                //val totalCount = binding.recyclerview.adapter?.itemCount?.minus(1)
+                val cPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val totalCount = recyclerView.adapter!!.itemCount - 1
 
-                if(!binding.recyclerview.canScrollVertically(1)
-                    && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if(!binding.recyclerview.canScrollVertically(1) &&
+                    totalCount == cPosition) {
                     when(document) {
                         R.id.fist_type -> {
                             videoNumber = "24"
@@ -159,15 +161,15 @@ class SearchFragment : Fragment() {
                         }
                     }
                 }
-                /*viewModel.getSearchMore(query = binding.searchEditText.text.toString(), videoNumber)
+                viewModel.getSearchMore(query = binding.searchEditText.text.toString(), videoNumber)
                 viewModel.more.observe(viewLifecycleOwner) {
                     contactList.addAll(it.items)
                     adapter.submitList(contactList)
-                    binding.recyclerview.adapter = adapter
-                }*/
+                    adapter.notifyDataSetChanged()
+                }
 
             }
-        })
+        })*/
 
         binding.floatButton.setOnClickListener {
             binding.recyclerview.scrollToPosition(0)
