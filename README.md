@@ -64,3 +64,6 @@
 ## 스크린샷
 <img src="readmeimg/readme_screan_1.png" width="200" height="400"> <img src="readmeimg/readme_screan_2.png" width="200" height="400"> <img src="readmeimg/readme_screan_3.png" width="200" height="400">
 <img src="readmeimg/readme_screan_4.png" width="200" height="400"> <img src="readmeimg/readme_screan_5.png" width="200" height="400">
+
+## 🔗시연영상
+<https://youtu.be/DsQHFFT40QQ>
