@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">MiniYouTube</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_home">Home</string>
+    <string name="main_search">Search</string>
+    <string name="main_my_videos">My Videos</string>
+    <string name="detail_like_btn">좋아요</string>
+    <string name="detail_share_btn">공유</string>
+    <string name="detail_video_title">Title</string>
+    <string name="detail_video_content">content content content content content content</string>
+    <string name="myvideo_id">MiniYouTube 개발자</string>
+    <string name="myvideo_introduce">MiniYouTube의 개발자 전주원, 박준식, 박혜란, 최윤찬입니다.저희는 꼭 주니어 개발자가 되고 싶습니다. 취업하고 싶어용ㅠㅠ\n부족한 점도 많지만 잘 부탁드립니다.\n감사합니다.^^</string>
+    <string name="myvideo_favorite_title">My Favorite Videos</string>
+    <string name="myvideo_empty_message">비어있어요.</string>
+    <string name="home_headingTitle">Most Popular Videos</string>
+    <string name="please_search">검색어를 입력해주세요.</string>
+    <string name="init_chip">초기화</string>
+    <string name="movie_chip">영화</string>
+    <string name="game_chip">게임</string>
+    <string name="sport_chip">스포츠</string>
+    <string name="event_chip">여행, 이벤트</string>
+    <string name="news_chip">News</string>
+    <string name="default_chip">기본값</string>
 </resources>
